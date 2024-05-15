@@ -4,15 +4,17 @@ import AddBgWithText from "../../public/utils/AddBgWithText";
 
 function SplashScreen2() {
   const [isUIVisible, setUIVisibility] = useState(false);
+
   useEffect(function () {
+    // shows bg first then rest of elements after some time
     const timer = setTimeout(function () {
       setUIVisibility(true);
-    }, 1 * 500);
+    }, 1 * 1000);
 
     return function () {
       clearTimeout(timer);
     };
-  }, [])
+  }, []);
 
   return (
     <Layout bg={'bg-[url("images/ss2.png")]'}>

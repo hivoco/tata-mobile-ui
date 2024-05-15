@@ -1,30 +1,32 @@
 import { useEffect, useState } from "react";
 import SplashScreen1 from "./SplashScreen1";
 import SplashScreen2 from "./SplashScreen2";
+import SplashScreen3 from "./SplashScreen3";
+
 
 function Home() {
-  const [splashScreen, setSplashScreen] = useState(1);
+  const [splashScreenNo, setSplashScreenNo] = useState(1);
 
   useEffect(
     function () {
       const timer = setTimeout(() => {
-        setSplashScreen((prev) => prev + 1);
-      }, 3 * 1000);
+        setSplashScreenNo(splashScreenNo === 2 ? splashScreenNo + 1 : splashScreenNo);
+      }, 4 * 1000);
       return function () {
         clearTimeout(timer);
       };
     },
-    [splashScreen]
+    [splashScreenNo]
   );
   return (
     <>
-      {splashScreen === 1 ? (
-        <SplashScreen1 setSplashScreen={setSplashScreen} />
+      {splashScreenNo === 1 ? (
+        <SplashScreen1 setSplashScreenNo={setSplashScreenNo} />
       ) : (
         ""
       )}
-      {splashScreen === 2 ? <SplashScreen2 /> : ""}
-      {/* {splashScreen===3?SplashScreen3:""} */}
+      {splashScreenNo === 2 ? <SplashScreen2 /> : ""}
+      {splashScreenNo === 3 ? <SplashScreen3 splashScreenNo={splashScreenNo} /> : ""}
     </>
   );
 }
