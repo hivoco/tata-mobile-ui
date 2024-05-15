@@ -10,8 +10,8 @@ function Layout({ children, bg, splashScreenNo }) {
           alt="Tata-gluco-logo"
         />
       ) : (
-      <div className="flex justify-between items-center pt-12 px-6">
-        <div className=" flex items-center">
+        <div className="flex justify-between items-center pt-12 px-6">
+          <div className=" flex items-center">
             <button className=" mr-[-1px]">
               <img src="svgs/back-arrow.svg" alt="back-arrow" />
             </button>
@@ -21,12 +21,13 @@ function Layout({ children, bg, splashScreenNo }) {
               src="svgs/Tata-gluco-logo.svg"
               alt="Tata-gluco-logo"
             />
-        </div>
+          </div>
 
-        <button>
-          <img src="svgs/exit-btn.svg" alt="exit button image" />
-        </button>
-      </div>
+          <button>
+            <img src="svgs/exit-btn.svg" alt="exit button image" />
+            {/* EXIT BUTTON */}
+          </button>
+        </div>
       )}
 
       {children}
