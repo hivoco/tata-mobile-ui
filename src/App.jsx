@@ -3,12 +3,13 @@ import Layout from "../Layout";
 import { BrowserRouter } from "react-router-dom";
 import SplashScreen1 from "./components/SplashScreen1";
 import SplashScreen2 from "./components/SplashScreen2";
+import Home from "./components/Home";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<SplashScreen1/>} />
+        <Route path="/" element={<Home/>} />
         
       </Routes>
     </BrowserRouter>
