@@ -9,7 +9,6 @@ function FinalScore() {
   const time = searchParams.get("time");
   const correct = searchParams.get("correct");
 
-
   return (
     <Layout bg={" bg-[url('images/ss3.png')] "}>
       <div className="modal-css   w-3/4 m-auto p-4 rounded-[9px] mt-[113px]">

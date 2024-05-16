@@ -13,13 +13,14 @@ import AudioPrompt from "./components/AudioPrompt";
 import CorrectAnswer from "./components/CorrectAnswer";
 import ExitGame from "./components/ExitGame";
 import FinalScore from "./components/FinalScore";
+import Login from "./components/Login";
 
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<FinalScore />} />
+        <Route path="/" element={<Login />} />
         
         {/* <Route path="/language-select" element={<LanguageSelection />} />
         <Route path="/quiz" element={<QuizLoading />} /> */}
