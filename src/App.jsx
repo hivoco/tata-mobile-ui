@@ -11,7 +11,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<SplashScreen4/>} />
+        <Route path="/" element={<Home/>} />
+        <Route path="/language-select" element={<LanguageSelection />} />
+
         
       </Routes>
     </BrowserRouter>

@@ -3,7 +3,7 @@ import { useState } from "react";
 function Layout({ children, bg, splashScreenNo }) {
   return (
     <div className={`w-screen h-screen ${bg} bg-cover`}>
-      {splashScreenNo ? (
+      {!splashScreenNo ? (
         <img
           className=" py-10 px-6"
           src="svgs/Tata-gluco-logo.svg"
