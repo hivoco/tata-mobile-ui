@@ -6,6 +6,8 @@ import SplashScreen2 from "./components/SplashScreen2";
 import Home from "./components/Home";
 import SplashScreen3 from "./components/SplashScreen3";
 import SplashScreen4 from "./components/SplashScreen4";
+import LanguageSelection from "./components/LanguageSelection";
+import QuizLoading from "./components/QuizLoading";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/language-select" element={<LanguageSelection />} />
+        <Route path="/quiz" element={<QuizLoading />} />
+
 
         
       </Routes>
