@@ -9,13 +9,17 @@ import SplashScreen4 from "./components/SplashScreen4";
 import LanguageSelection from "./components/LanguageSelection";
 import QuizLoading from "./components/QuizLoading";
 import Quiz from "./components/Quiz";
+import AudioPrompt from "./components/AudioPrompt";
+import CorrectAnswer from "./components/CorrectAnswer";
+import ExitGame from "./components/ExitGame";
+import FinalScore from "./components/FinalScore";
 
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Quiz />} />
+        <Route path="/" element={<FinalScore />} />
         
         {/* <Route path="/language-select" element={<LanguageSelection />} />
         <Route path="/quiz" element={<QuizLoading />} /> */}

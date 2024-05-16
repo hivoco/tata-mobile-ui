@@ -3,7 +3,7 @@ import Layout from "../../Layout";
 function Quiz() {
   return (
     <Layout bg={"bg-[url('images/ss3.png')] "}>
-      <div className="modal-css  flex flex-col gap-6 py-5 px-[30px] rounded-[10px] w-10/12  my-0 mx-auto  ">
+      <div className="modal-css  flex flex-col gap-6 py-5 px-[30px] rounded-[10px] w-10/12  my-0 mx-auto  mt-10 ">
         <div
           //   onClick={() =>
           //     convertTextToSpeech(allQuestions?.[currentIndex]?.audio)

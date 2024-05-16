@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 @import url(https://db.onlinewebfonts.com/c/201b73cb60de7ac3a4812a7f33a9ca3d?family=LT+Energy);
+
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap');
+
 
 @tailwind base;
 @tailwind components;
@@ -14,7 +18,34 @@
 }
 
 
-.modal-css{
+
+.modal-css {
   background-color: #FFFFFFE5;
   border: 1px solid white;
+}
+
+.outlined-btn {
+  padding: 13.95px 51px;
+  border-radius: 6.41px;
+  border: 1px solid #1D55FD;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14.52px;
+  text-align: center;
+  color: #1D55FD;
+  background-color: #fff;
+}
+
+
+.score-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6.5px 7.23px;
+  border-radius: 26.12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 72px;
 }
