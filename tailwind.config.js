@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily: {
         Inter: ["Inter", "sans-serif"],
+        LtEnergy:["LT Energy","sans-serif"]
       },
     },
   },

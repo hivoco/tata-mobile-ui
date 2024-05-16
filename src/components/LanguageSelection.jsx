@@ -42,10 +42,14 @@ function LanguageSelection() {
   function handleClick(){
         navigate('/quiz')
   }
+
+  
+
+
   return (
     <Layout bg={"bg-[url('images/ss2.png')] "}>
       <div className="flex justify-center mt-20 md:mt-0">
-        <div className="flex flex-col gap-5 md:gap-[50px]  w-80 md:w-[557px]  h-auto md:h-[650px]  py-10 px-[30px]  rounded-[10px]  bg-[#FFFFFFE5] ">
+        <div className="modal-css  flex flex-col gap-5 md:gap-[50px]  w-80 md:w-[557px]  h-auto md:h-[650px]  py-10 px-[30px]  rounded-[10px]  ">
           <header className="flex flex-col gap-[10px ] ">
             <h1 className="font-Inter text-xl md:text-[34px] font-bold  md:leading-[41.15px] text-left text-[#2B262D]">
               Language Selection.

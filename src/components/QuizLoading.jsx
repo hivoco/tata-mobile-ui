@@ -4,7 +4,7 @@ function QuizLoading() {
   return (
     <Layout bg={" bg-[url('images/ss3.png')] "}>
       <div className="flex justify-center w-full px-6 pt-32" >
-        <div className="flex flex-col items-center gap-7 border border-solid border-white bg-[#FFFFFFE5] w-[413px] py-10 px-[30px] rounded-[10px] ">
+        <div className="modal-css flex flex-col items-center gap-7 w-[413px] py-10 px-[30px] rounded-[10px] ">
           <div className="flex flex-col items-center gap-6">
             <header className="flex flex-col justify-center items-center gap-2">
               <h1 className="text-[70px] font-normal leading-[77.56px]  text-[#252042] font-OdibeeSans">
