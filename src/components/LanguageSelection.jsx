@@ -1,13 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../Layout";
 import { useNavigate } from "react-router-dom";
+// import { getUniqueID } from "../api/endpoint";
+import axios from "../api/instance";
 
 function LanguageSelection() {
-
-  const languages = ["JavaScript", "Python", "Java", "C++", "Swift"];
   const navigate = useNavigate();
+  const [animation, setAnimation] = useState(false);
 
-  const [selectedOption, setSelectedOption] = useState();
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setAnimation(true);
+    }, 200);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  const getUniqueID = async () => {
+    const responce = await axios(`/guest_user?name=&phone=`);
+    console.log("first", responce.data.unique_id);
+    sessionStorage.setItem("unique_id", responce.data.unique_id);
+    navigate(`/quiz/play?lang=${selectedOption?.toLowerCase()}`);
+    // return responce.data.unique_id;
+  };
+
+  const languages = ["English", "Hindi", "Tamil", "Telugu", "Bangla"];
+  const [selectedOption, setSelectedOption] = useState("English");
 
   const selectLanguagesUI = languages.map((language, index) => {
     return (
@@ -15,7 +34,7 @@ function LanguageSelection() {
         id={language}
         onClick={() => setSelectedOption(language)}
         key={language}
-        className={`flex justify-between  py-3 px-5 md:py-[19px] md:px-[22px] border-solid rounded-[15px] border-2  ${
+        className={`  flex justify-between  py-3 px-5 md:py-[19px] md:px-[22px] border-solid rounded-[15px] border-2  ${
           selectedOption === language ? "border-[#00AA07]" : "border-[#ADD1FF]"
         }`}
       >
@@ -39,16 +58,18 @@ function LanguageSelection() {
     );
   });
 
-  function handleClick(){
-        navigate('/quiz')
-  }
-
-  
-
+  const handleClick = () => {
+    getUniqueID();
+  };
 
   return (
-    <Layout bg={"bg-[url('images/ss2.png')] "}>
-      <div className="flex justify-center mt-20 md:mt-0">
+    <Layout bg={"images/ss2.png"}>
+      <div
+        className={`opacity-0 ${
+          animation &&
+          "transition-all duration-200 delay-200 ease-in opacity-100"
+        } flex justify-center mt-20 md:mt-0`}
+      >
         <div className="modal-css  flex flex-col gap-5 md:gap-[50px]  w-80 md:w-[557px]  h-auto md:h-[650px]  py-10 px-[30px]  rounded-[10px]  ">
           <header className="flex flex-col gap-[10px ] ">
             <h1 className="font-Inter text-xl md:text-[34px] font-bold  md:leading-[41.15px] text-left text-[#2B262D]">
@@ -67,7 +88,7 @@ function LanguageSelection() {
 
             <button
               className="purple-btn shadow-[4.62px_6.92px_0px_0px_black]  px-[91px] py-[18px] rounded-[9px]  font-bold leading-[19.36px] "
-              //   onClick={() => handleClick()}
+              onClick={async () => handleClick()}
               type="button"
             >
               Next

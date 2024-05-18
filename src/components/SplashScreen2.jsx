@@ -1,26 +1,33 @@
 import { useEffect, useState } from "react";
 import Layout from "../../Layout";
-import AddBgWithText from "../../public/utils/AddBgWithText";
+import SecondAddBgWithText from "../utils/SecondAddBgWithText";
 
-function SplashScreen2() {
-  const [isUIVisible, setUIVisibility] = useState(false);
+function SplashScreen2({ setSplashScreenNo }) {
+  const [isUIVisible, setUIVisibility] = useState(true);
+  const [animation, setAnimation] = useState(false);
 
   useEffect(function () {
     // shows bg first then rest of elements after some time
     const timer = setTimeout(function () {
       setUIVisibility(true);
-    }, 1 * 1000);
+      setAnimation(true);
+    }, 1 * 500);
+
+    const timer1 = setTimeout(function () {
+      setSplashScreenNo(3);
+    }, 4000);
 
     return function () {
       clearTimeout(timer);
+      clearTimeout(timer1);
     };
   }, []);
 
   return (
-    <Layout bg={'bg-[url("images/ss2.png")]'}>
+    <Layout bg={"images/ss2.png"}>
       {isUIVisible ? ( // after 500 ms its displays elements
         <div className={`flex flex-col gap-28 items-center pt-5  px-4 `}>
-          {<AddBgWithText />}
+          {<SecondAddBgWithText animation={animation} />}
           <img
             className="w-[100px]  animate-spin"
             src="images/rotating-football.png"

@@ -1,39 +1,42 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../../Layout";
 
-
-function SplashScreen3({ splashScreenNo }) {
-  const [isUIVisible, setUIVisibility] = useState(false);
-
-  // create a custom hook which take input as time and after timer ends updates the state
-  // the ui will be dependent on the state
+function SplashScreen3({ splashScreenNo, setSplashScreenNo }) {
+  const [isUIVisible, setUIVisibility] = useState(true);
+  const [animation, setAnimation] = useState(false);
 
   useEffect(function () {
     const timer = setTimeout(() => {
       setUIVisibility(true);
+      setAnimation(true);
+    }, 1 * 2000);
+    const timer1 = setTimeout(() => {
+      setSplashScreenNo(4);
     }, 1 * 2000);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   return (
-    <Layout bg={'bg-[url("images/ss3.png")]'} splashScreenNo={splashScreenNo}>
-      {isUIVisible ? (
-        <div className=" flex flex-col items-center pt-11">
-          <img src=" svgs/win-signed.svg" alt="win signed" />
-          <img src="svgs/jerseys.svg" alt="jerseys" />
+    <Layout bg={"images/ss3.png"} splashScreenNo={splashScreenNo}>
+      <div className=" flex flex-col items-center pt-11">
+        <img className="w-96" src="/images/Win signed.png" alt="win signed" />
+        <img className="w-72" src="/images/Jersey.png" alt="jerseys" />
 
-          <img
-            className=" -mt-11 -mb-16"
-            src="svgs/tshirt-n-stars.svg"
-            alt="jerseys"
-          />
+        <img
+          className=" -mt-11 -mb-16"
+          src="/svgs/tshirt-n-stars.svg"
+          alt="jerseys"
+        />
 
-          <img src="svgs/top-5-winners.svg" alt="jerseys" />
-        </div>
-      ) : (
-        ""
-      )}
+        <img
+          className={`w-96  `}
+          src="/images/Top 5 winners.png"
+          alt="jerseys"
+        />
+      </div>
     </Layout>
   );
 }
