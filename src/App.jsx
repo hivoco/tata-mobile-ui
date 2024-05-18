@@ -14,13 +14,14 @@ import CorrectAnswer from "./components/CorrectAnswer";
 import ExitGame from "./components/ExitGame";
 import FinalScore from "./components/FinalScore";
 import Login from "./components/Login";
+import LeaderBoard from "./components/LeaderBoard";
 
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<LeaderBoard />} />
         
         {/* <Route path="/language-select" element={<LanguageSelection />} />
         <Route path="/quiz" element={<QuizLoading />} /> */}

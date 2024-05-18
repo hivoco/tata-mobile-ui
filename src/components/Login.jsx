@@ -5,7 +5,7 @@ function Login() {
     <Layout bg={" bg-[url('images/ss3.png')] "}>
       <div className=" flex flex-col px-[29px]  items-center  bg-no-repeat  container   overflow-x-hidden">
         <div className="flex flex-col items-center ">
-          <div className="h-40">
+          <div className="h-40 w-auto">
             <img src="svgs/Its-Game-time.svg" alt="its game time" />
           </div>
 
