@@ -25,7 +25,7 @@ function SplashScreen2({ setSplashScreenNo }) {
 
   return (
     <Layout bg={"images/ss2.png"}>
-      {isUIVisible ? ( // after 500 ms its displays elements
+      {isUIVisible ? (
         <div className={`flex flex-col gap-28 items-center pt-5  px-4 `}>
           {<SecondAddBgWithText animation={animation} />}
           <img
