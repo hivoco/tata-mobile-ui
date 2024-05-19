@@ -12,7 +12,9 @@ import Quiz from "./components/Quiz";
 import BackgroundMusic from "../src/utils/BackroundMusic";
 import FinalScore from "./components/FinalScore";
 import Thanks from "./components/Thanks";
+import Login from "./components/Login";
 import { useState } from "react";
+import LeaderBoard from "./components/LeaderBoard";
 
 function App() {
   const [isMusicAllowed, setIsMusicAllowed] = useState(false);
@@ -39,6 +41,8 @@ function App() {
         />
         <Route path="/quiz/play/finish" element={<Thanks />} />
         <Route path="/quiz/get-your-final-score" element={<FinalScore />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/result/access-your-leader" element={<LeaderBoard />} />
       </Routes>
     </BrowserRouter>
   );

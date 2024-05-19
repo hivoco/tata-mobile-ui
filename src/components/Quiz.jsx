@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Layout from "../../Layout";
 import axios from "../api/instance";
 import { useEffect, useRef, useState } from "react";
-import { setDataBeforeLogin } from "../api/endpoint";
+// import { setDataBeforeLogin } from "../api/endpoint";
 import {
   debounce,
   micOffSound,
@@ -150,7 +150,7 @@ function Quiz({ setIsMusicAllowed }) {
     stopSpeechRecognition();
 
     if (value) {
-      micOffSound();
+      // micOffSound();
 
       const ans = await verifyAnswer(speechText, question_id, false);
       let event = "";
@@ -184,7 +184,7 @@ function Quiz({ setIsMusicAllowed }) {
             givenAns: event,
             correctAns: ans.correct_answer,
             isCorrect: ans.is_correct,
-            time: seconds,
+            time: 30 - Number(seconds),
           },
         ],
       });
@@ -198,9 +198,33 @@ function Quiz({ setIsMusicAllowed }) {
         setMicOnTime(0);
         return;
       }
-      micOnSound();
+      // micOnSound();
       startSpeechRecognition();
     }
+  };
+
+  const setDataBeforeLogin = async (userResponceArray) => {
+    await axios.post(`/before_login_quiz_data`, {
+      uuid: userResponceArray.uuid,
+      name: userResponceArray.name,
+      phone: userResponceArray.phone,
+      quiz: userResponceArray.quiz,
+    });
+  };
+
+  const viewScore = async () => {
+    await setDataBeforeLogin(userResponceArray);
+    console.log("object", sessionStorage.getItem("unique_id"));
+    const responce = await axios(
+      `/your_score?uuid=${sessionStorage.getItem("unique_id")}`
+    );
+    console.log("objectres", responce);
+
+    setIsMusicAllowed(true);
+
+    navigate(
+      `/quiz/get-your-final-score?score=${responce.data.score}&time=${responce.data.time}&correct=${responce.data.totalCorrectAns}`
+    );
   };
 
   return (
@@ -223,6 +247,7 @@ function Quiz({ setIsMusicAllowed }) {
                   seconds={seconds}
                   setSeconds={setSeconds}
                   onTimeout={handleNext}
+                  index={currentIndex}
                 />
               </span>
             </div>
@@ -368,12 +393,7 @@ function Quiz({ setIsMusicAllowed }) {
 
             {currentIndex === 9 ? (
               <button
-                onClick={() => {
-                  setDataBeforeLogin(userResponceArray);
-                  setIsMusicAllowed(true)
-                  navigate("/quiz/play/finish");
-
-                }}
+                onClick={() => viewScore()}
                 disabled={selectedOption.trim() != "" ? false : true}
                 className="border-[1.3px] border-solid bg-gradient-to-r from-[#0043A6] via-[#BD00FF] to-pink-500 rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white"
               >

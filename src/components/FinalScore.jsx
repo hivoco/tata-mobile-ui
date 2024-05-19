@@ -71,10 +71,10 @@ function FinalScore() {
           </div>
 
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/login")}
             className="purple-btn whitespace-nowrap	 border-[0.89px] shadow-[1.77px_2.66px_0px_0px_#000000] rounded-[4.43px] text-[14px] leading-[17px] text-center font-semibold py-[13px] "
           >
-            View Leaderboard
+           Submit Your Score
           </button>
         </div>
       </div>

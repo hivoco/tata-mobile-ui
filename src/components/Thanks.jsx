@@ -33,25 +33,25 @@ const Thanks = () => {
         <div className="flex justify-between items-center mt-16 gap-6">
           <div
             onClick={() => navigate("/select-language")}
-            className="border text-white border-black rounded-lg flex justify-center items-center   py-2 px-2 w-[100px] "
+            className="border border-white text-white  rounded-lg flex justify-center items-center   py-4 px-7 w-[170px] "
           >
             <span className="font-normal text-sm">Play again</span>
           </div>
           <div
-            onClick={() => navigate("/")}
-            className=" text-white  rounded-lg flex items-center justify-center    py-2 px-2  bg-gradient-to-r from-[#0043A6] via-[#BD00FF] to-pink-500 "
+            onClick={() => navigate("/result/access-your-leader")}
+            className=" text-white  rounded-lg flex items-center justify-center shadow-[4px_4px_0px_0px_black]   py-4 px-7 w-[170px]   bg-gradient-to-r from-[#2038B5] to-[#A409F4] 2038B5"
           >
             <span className="font-normal text-sm ">Leaderboard</span>
           </div>
 
-          <div
+          {/* <div
             onClick={() => {
               viewScore();
             }}
             className="border text-white border-black rounded-lg flex justify-center items-center   py-2 px-2 w-[100px] "
           >
             <span className="font-normal text-sm">View Score</span>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

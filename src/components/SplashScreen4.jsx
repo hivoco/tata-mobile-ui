@@ -6,24 +6,31 @@ import { useNavigate } from "react-router-dom";
 function SplashScreen4({ splashScreenNo }) {
   const navigate = useNavigate();
   const [isUIVisible, setUIVisibility] = useState(true);
+   const [animation, setAnimation] = useState(false);
 
   // create a custom hook which take input as time and after timer ends updates the state
   // the ui will be dependent on the state
 
-  // useEffect(function () {
-  //   const timer = setTimeout(() => {
-  //     setUIVisibility(true);
-  //   }, 1 * 2000);
+  useEffect(function () {
+  
+      setAnimation(true);
+ 
 
-  //   return () => clearInterval(timer);
-  // }, []);
+    // return () => clearInterval(timer);
+  }, []);
 
   return (
     <Layout bg={"/images/ss4.png"} splashScreenNo={splashScreenNo}>
       {!isUIVisible ? (
         <img className="pt-8  my-0 mx-auto" src="svgs/star.svg" alt="star" />
       ) : (
-        <div className="flex flex-col  items-center">
+        <div
+          // className={`flex flex-col  items-center`}
+          className={`opacity-0 ${
+            animation &&
+            "transition-all duration-200 delay-200 ease-in opacity-100"
+          } flex flex-col  items-center`}
+        >
           <div className=" w-[25rem] h-[25rem] bg-[url('/svgs/star.svg')] bg-cover flex flex-col justify-center items-center ">
             <img
               className=" w-72 "

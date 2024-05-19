@@ -23,6 +23,7 @@ function Layout({ children, bg, splashScreenNo }) {
           </button>
 
           <img
+            onClick={() => navigate("/")}
             className=""
             src="/svgs/Tata-gluco-logo.svg"
             alt="Tata-gluco-logo"
