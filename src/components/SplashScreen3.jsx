@@ -6,7 +6,7 @@ function SplashScreen3({ splashScreenNo, setSplashScreenNo }) {
 
   useEffect(function () {
     const timer = setTimeout(() => {
-      setUIVisibility(true);
+      // setUIVisibility(true);
       setAnimation(true);
     }, 1 * 1000);
 

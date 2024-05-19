@@ -52,14 +52,28 @@ function Login() {
                       onChange={(e) => setName(e.target.value)}
                       placeholder={"Your Name"}
                       type="text"
+                      // required
+                      // maxLength={10}
+                      // minLength={3}
+  
                     />
 
                     <input
                       className="w-full py-5 px-[18px] border border-solid border-[#ADD1FF] text-xs font-Inter font-normal rounded-[10px]
                                         outline-none  leading-[14.5px] text-left"
                       onChange={(e) => setPhone(e.target.value)}
+                      maxLength={10}
+                      minLength={10}
                       placeholder={"Your Phone No."}
                       type="tel"
+                      // required
+                      onKeyDown={(e) => {
+                        const charCode = e.which ? e.which : e.keyCode;
+                        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                          e.preventDefault();
+                        }
+                      }
+                    }
                     />
                   </div>
                 </div>

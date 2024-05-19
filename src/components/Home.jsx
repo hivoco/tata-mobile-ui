@@ -20,6 +20,7 @@ function Home({ setIsMusicAllowed }) {
   //   },
   //   [splashScreenNo]
   // );
+  
   return (
     <>
       {splashScreenNo === 1 && (

@@ -12,11 +12,8 @@ function SplashScreen4({ splashScreenNo }) {
   // the ui will be dependent on the state
 
   useEffect(function () {
-  
-      setAnimation(true);
- 
-
-    // return () => clearInterval(timer);
+    const timer = setTimeout(() => setAnimation(true), 400);
+    return () => clearTimeout(timer);
   }, []);
 
   return (

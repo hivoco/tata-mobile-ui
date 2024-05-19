@@ -50,7 +50,8 @@ function LanguageSelection() {
           name="language-option"
           id={index}
           onChange={(e) => e.stopPropagation()}
-          //   onChange={() => setSelectedOption(language)}
+
+            // onChange={() =>{ setSelectedOption(language) }}
           checked={selectedOption === language}
           value={language}
         />

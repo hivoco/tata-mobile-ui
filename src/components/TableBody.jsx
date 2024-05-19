@@ -4,7 +4,7 @@ function TableBody({ data }) {
     const isLastRow = index === data.length - 1;
     return (
       <tr
-        key={rank}
+        key={index}
         className={`font-Inter flex justify-between items-center py-3 px-2 rounded-[4.22px] gap-12 shadow-[0px_1.7px_10.1px_0px_#00000026]
             ${
               index <= 2
@@ -59,7 +59,7 @@ function TableBody({ data }) {
         >
           <span className="  ">{score}</span>
 
-          <div className="">{Math.floor(Number(time) / 60)+1}</div>
+          <div className="">{Math.floor(Number(time) / 60) + 1}</div>
         </td>
       </tr>
     );

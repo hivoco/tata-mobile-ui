@@ -30,6 +30,8 @@ function App() {
       <Routes>
         <Route
           path="/"
+          // element={<SplashScreen3/>}
+
           element={<Home setIsMusicAllowed={setIsMusicAllowed} />}
         />
 

@@ -1,13 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Popup from "./src/components/Popup";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Layout({ children, bg, splashScreenNo }) {
+  const { pathname } = useLocation();
+  const [isBtnVisible, setBtnVisibility] = useState(false);
+
+  useEffect(
+    function () {
+      pathname !== "/" && setBtnVisibility(true);
+    },
+    [pathname]
+  );
+
   const navigate = useNavigate();
   const [isopen, setisopen] = useState(false);
+
   const handlePopup = () => {
     setisopen(!isopen);
   };
+
   return (
     <div
       className={`w-screen min-h-screen  bg-cover pb-10`}
@@ -18,9 +30,11 @@ function Layout({ children, bg, splashScreenNo }) {
     >
       <div className="flex justify-between items-center pt-12 px-6">
         <div className=" flex items-center">
-          <button onClick={() => navigate(-1)} className=" mr-[-1px]">
-            <img src="/svgs/back-arrow.svg" alt="back-arrow" />
-          </button>
+          {isBtnVisible && (
+            <button onClick={() => navigate(-1)} className=" mr-[-1px]">
+              <img src="/svgs/back-arrow.svg" alt="back button" />
+            </button>
+          )}
 
           <img
             onClick={() => navigate("/")}
