@@ -16,6 +16,7 @@ function SplashScreen3({ splashScreenNo, setSplashScreenNo }) {
 
     return () => {
       clearTimeout(timer);
+      clearTimeout(timer1);
     };
   }, []);
 

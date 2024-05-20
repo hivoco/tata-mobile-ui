@@ -44,14 +44,14 @@ function LanguageSelection() {
         >
           {language}
         </label>
+
         <input
           className="border-[0.05px] border-solid border-[#00AA07] accent-[#00AA07] w-3 md:w-[22px]"
           type="radio"
           name="language-option"
           id={index}
-          onChange={(e) => e.stopPropagation()}
-
-            // onChange={() =>{ setSelectedOption(language) }}
+          // onChange={(e) => e.stopPropagation()}
+          onChange={() => setSelectedOption(language) }
           checked={selectedOption === language}
           value={language}
         />

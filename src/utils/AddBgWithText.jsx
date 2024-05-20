@@ -1,9 +1,9 @@
-function starBgWithText({ animation }) {
+function AddBgWithText({ animation }) {
   return (
     <div
       className={`${
         animation && ""
-      } relative h-[305px]  bg-[url('/svgs/star.svg')] bg-auto bg-center bg-no-repeat flex flex-col justify-center items-center`}
+      } relative h-[305px]  bg-[url('/tata-mobile-ui/public/svgs/star.svg')] bg-auto bg-center bg-no-repeat flex flex-col justify-center items-center`}
     >
       <div
         className={`transition-all delay-150 duration-300 ease-in-out absolute flex flex-col justify-center items-center ${
@@ -17,11 +17,11 @@ function starBgWithText({ animation }) {
         className={`transition-all delay-150 duration-300 ease-in-out w-80 absolute mt-56 ${
           animation ? "-ml-[1000px] -mb-80 " : "-ml-0 -mb-0 opacity-100"
         }`}
-        src="/images/Win Quiz.png"
+        src="images/Win Quiz.png"
         alt="play"
       />
     </div>
   );
 }
 
-export default starBgWithText;
+export default AddBgWithText;

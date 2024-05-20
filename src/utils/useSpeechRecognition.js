@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 const useSpeechRecognition = () => {
   const [recognition, setRecognition] = useState(null);
   const [speechText, setSpeechText] = useState("");
-    const imageRef = useRef();
+  const imageRef = useRef();
 
   const handleSpeechResult = (e) => {
     const transcript = Array.from(e.results)
@@ -18,25 +18,22 @@ const useSpeechRecognition = () => {
     if (imageRef.current) {
       imageRef.current.click();
     }
-    console.log("Mic Off");
     // setIsSpeechRecognitionActive(false);
   };
 
   const startSpeechRecognition = () => {
-    
-      recognition?.start();
+
+    recognition?.start();
     //   setIsSpeechRecognitionActive(true);
 
-      console.log("Mic On");
-    
   };
 
   const stopSpeechRecognition = () => {
-    
-      recognition?.stop();
+
+    recognition?.stop();
 
     //   setIsSpeechRecognitionActive(false);
-   
+
   };
 
   useEffect(() => {

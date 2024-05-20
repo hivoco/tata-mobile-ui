@@ -6,7 +6,6 @@ function LeaderBoard() {
   const [data, setData] = useState([]);
   useEffect(() => {
     const res = JSON.parse(sessionStorage.getItem("user_data"));
-    console.log("object", res.winner);
     setData(res.winner);
   }, []);
 

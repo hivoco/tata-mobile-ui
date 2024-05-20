@@ -5,7 +5,7 @@ import axios from "../api/instance.js";
 
 function Login() {
   const navigate = useNavigate();
-  const [phone, setPhone] = useState(0);
+  const [phone, setPhone] = useState('');
   const [name, setName] = useState("");
   const handleData = async () => {
     if (!phone) {
@@ -49,31 +49,32 @@ function Login() {
                     <input
                       className="w-full py-5 px-[18px] border border-solid border-[#ADD1FF] text-xs font-Inter font-normal rounded-[10px]
             outline-none  leading-[14.5px] text-left"
-                      onChange={(e) => setName(e.target.value)}
+                      // onChange={(e) => setName(e.target.value.replace(/[^A-Za-z]/ig, ''))}
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                      value={name}
                       placeholder={"Your Name"}
                       type="text"
                       // required
-                      // maxLength={10}
-                      // minLength={3}
-  
                     />
 
                     <input
                       className="w-full py-5 px-[18px] border border-solid border-[#ADD1FF] text-xs font-Inter font-normal rounded-[10px]
                                         outline-none  leading-[14.5px] text-left"
-                      onChange={(e) => setPhone(e.target.value)}
+                      onChange={(e) => {
+                        const re = /^[0-9\b]+$/;
+                        if (e.target.value === "" || re.test(e.target.value)) {
+                          setPhone(e.target.value);
+                        }
+                      }}
+                      
+                      value={phone}
                       maxLength={10}
                       minLength={10}
                       placeholder={"Your Phone No."}
-                      type="tel"
+                      inputMode="numeric"
                       // required
-                      onKeyDown={(e) => {
-                        const charCode = e.which ? e.which : e.keyCode;
-                        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                          e.preventDefault();
-                        }
-                      }
-                    }
                     />
                   </div>
                 </div>

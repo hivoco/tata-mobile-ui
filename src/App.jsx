@@ -18,7 +18,6 @@ import LeaderBoard from "./components/LeaderBoard";
 
 function App() {
   const [isMusicAllowed, setIsMusicAllowed] = useState(false);
-  console.log("object", isMusicAllowed);
   return (
     <BrowserRouter>
       {isMusicAllowed && (

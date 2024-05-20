@@ -55,12 +55,13 @@ function Quiz({ setIsMusicAllowed }) {
 
   const getQuestion = debounce(async () => {
     setIsLoading(true);
-    setOpenSoundPopup(true);
+
     const responce = await axios.post(`/get_questions`, { lang: lang });
     setAllQuestions(responce?.data.questions);
     setAudioTime(Number(responce?.data?.questions[0]?.audio_time));
     setIsLoading(false);
-  }, 500);
+    setOpenSoundPopup(true);
+  }, 200);
 
   useEffect(() => {
     const res = getQuestion();
@@ -69,6 +70,7 @@ function Quiz({ setIsMusicAllowed }) {
   }, []);
 
   const handleNext = () => {
+    setIsQuizQuestionLoading(false);
     setSeconds(30);
     setMicOnTime(0);
     setSpeechText("");
@@ -115,7 +117,6 @@ function Quiz({ setIsMusicAllowed }) {
 
     const ans = await verifyAnswer(event, id, true);
     setIsGivenAnswerCorrect(ans.is_correct);
-    // console.log(ans.is_correct);
 
     setCorrectResponceAnswer(ans.correct_answer);
 
@@ -137,7 +138,6 @@ function Quiz({ setIsMusicAllowed }) {
 
   const audioTimerFunction = () => {
     if (selectedOption == "") {
-      console.log("object");
       setIsAnswered(true);
       enter(allQuestions?.[currentIndex]?.question_id);
     }
@@ -214,11 +214,9 @@ function Quiz({ setIsMusicAllowed }) {
 
   const viewScore = async () => {
     await setDataBeforeLogin(userResponceArray);
-    console.log("object", sessionStorage.getItem("unique_id"));
     const responce = await axios(
       `/your_score?uuid=${sessionStorage.getItem("unique_id")}`
     );
-    console.log("objectres", responce);
 
     setIsMusicAllowed(true);
 
@@ -256,7 +254,6 @@ function Quiz({ setIsMusicAllowed }) {
               <div className="   flex flex-col gap-[14px] ">
                 <p className="font-Inter font-bold text-[#1D55FD] text-base leading-[19.36px] text-center">
                   Question {currentIndex + 1}/10
-                  {/* Question {currentIndex + 1}/10 */}
                 </p>
 
                 <p className="font-Inter font-semibold text-[#252042] text-[11px]  leading-[13px]  text-center">
@@ -275,7 +272,6 @@ function Quiz({ setIsMusicAllowed }) {
                   className="h-48"
                   ref={imageRef}
                   onClick={() => {
-                    console.log("sdfd");
                     setIsAnswered(!isAnswered);
 
                     enter(allQuestions?.[currentIndex]?.question_id);
@@ -291,8 +287,7 @@ function Quiz({ setIsMusicAllowed }) {
               </div>
 
               <p className="font-Inter font-semibold text-[10px] leading-[12px] text-center">
-                Tap to Submit
-                {/* {isAnswered ? "Tap to Submit" : "Tap to Answer"} */}
+                {isAnswered ? "Tap to Submit" : "Tap to Answer"}
               </p>
             </div>
 
@@ -448,12 +443,6 @@ function Quiz({ setIsMusicAllowed }) {
               onTimeout={audioTimerFunction}
             />
           )}
-          {/* {
-            questionStatus === true && rightAnswerSound()
-            // <Popup>
-            //   <CorrectAnswer />
-            // </Popup>
-          } */}
         </div>
       )}
     </Layout>
