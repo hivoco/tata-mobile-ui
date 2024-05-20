@@ -3,7 +3,7 @@ function AddBgWithText({ animation }) {
     <div
       className={`${
         animation && ""
-      } relative h-[305px]  bg-[url('/tata-mobile-ui/public/svgs/star.svg')] bg-auto bg-center bg-no-repeat flex flex-col justify-center items-center`}
+      } relative h-[305px]  bg-[url('/svgs/star.svg')] bg-auto bg-center bg-no-repeat flex flex-col justify-center items-center`}
     >
       <div
         className={`transition-all delay-150 duration-300 ease-in-out absolute flex flex-col justify-center items-center ${

@@ -1,7 +1,7 @@
 function SecondAddBgWithText({ animation }) {
   return (
     <div
-      className={` relative w-[312px] h-[305px] bg-[url('/tata-mobile-ui/public/svgs/star.svg')]      bg-auto  bg-center  bg-no-repeat flex flex-col justify-center items-center`}
+      className={` relative w-[312px] h-[305px] bg-[url('/svgs/star.svg')]      bg-auto  bg-center  bg-no-repeat flex flex-col justify-center items-center`}
     >
       <img
         className={`absolute z-20 w-48 top-14   -mt-5  transition-all delay-[100ms] duration-300 ease-in-out   ${

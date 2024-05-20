@@ -95,16 +95,16 @@ function Quiz({ setIsMusicAllowed }) {
 
     if (responce?.data?.is_correct == "true") {
       rightAnswerSound();
-      // setQuestionStatus(true);
-      // setTimeout(() => {
-      //   setQuestionStatus("");
-      // }, 1000);
+      setQuestionStatus(true);
+      setTimeout(() => {
+        setQuestionStatus(false);
+      }, 2500);
     } else {
       wrongAnswerSound();
       setQuestionStatus(false);
-      setTimeout(() => {
-        setQuestionStatus("");
-      }, 1000);
+    //   setTimeout(() => {
+    //     setQuestionStatus("");
+    //   }, 1500);
     }
     return responce?.data;
   };
@@ -273,7 +273,9 @@ function Quiz({ setIsMusicAllowed }) {
                   ref={imageRef}
                   onClick={() => {
                     setIsAnswered(!isAnswered);
-
+                    if (audioRef.current) {
+                      audioRef.current.src = null;
+                    }
                     enter(allQuestions?.[currentIndex]?.question_id);
                   }}
                   style={{
@@ -443,6 +445,11 @@ function Quiz({ setIsMusicAllowed }) {
               onTimeout={audioTimerFunction}
             />
           )}
+          {questionStatus && (
+          <Popup bg="bg-transparent">
+            <CorrectAnswer/>
+            </Popup>
+         )}
         </div>
       )}
     </Layout>
