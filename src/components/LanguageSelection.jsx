@@ -19,19 +19,21 @@ function LanguageSelection() {
 
   const getUniqueID = async () => {
     const responce = await axios(`/guest_user?name=&phone=`);
-    console.log("first", responce.data.unique_id);
     sessionStorage.setItem("unique_id", responce.data.unique_id);
     navigate(`/quiz/play?lang=${selectedOption?.toLowerCase()}`);
-    // return responce.data.unique_id;
+  };
+
+  const handleClick = () => {
+    getUniqueID();
   };
 
   const languages = ["English", "Hindi", "Tamil", "Telugu", "Bangla"];
+
   const [selectedOption, setSelectedOption] = useState("English");
 
-  const selectLanguagesUI = languages.map((language, index) => {
+  const selectLanguagesUI = languages.map((language) => {
     return (
       <div
-        id={language}
         onClick={() => setSelectedOption(language)}
         key={language}
         className={`  flex justify-between  py-3 px-5 md:py-[19px] md:px-[22px] border-solid rounded-[15px] border-2  ${
@@ -47,21 +49,16 @@ function LanguageSelection() {
 
         <input
           className="border-[0.05px] border-solid border-[#00AA07] accent-[#00AA07] w-3 md:w-[22px]"
+          id={language}
           type="radio"
           name="language-option"
-          id={index}
-          // onChange={(e) => e.stopPropagation()}
-          onChange={() => setSelectedOption(language) }
+          onChange={(e) => setSelectedOption(e.target.value)}
           checked={selectedOption === language}
           value={language}
         />
       </div>
     );
   });
-
-  const handleClick = () => {
-    getUniqueID();
-  };
 
   return (
     <Layout bg={"images/ss2.png"}>

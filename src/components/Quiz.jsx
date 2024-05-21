@@ -39,10 +39,10 @@ function Quiz({ setIsMusicAllowed }) {
   const [isQuizQuestionLoading, setIsQuizQuestionLoading] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [seconds, setSeconds] = useState(30);
+  const [seconds, setSeconds] = useState(15);
   const [permissionToStartSound, setPermissionToStartSound] = useState(false);
   const [openSoundPopup, setOpenSoundPopup] = useState(true);
-  const [audioTime, setAudioTime] = useState(30);
+  const [audioTime, setAudioTime] = useState(15);
   const [micOnTime, setMicOnTime] = useState(0);
   const [questionStatus, setQuestionStatus] = useState("");
 
@@ -71,7 +71,7 @@ function Quiz({ setIsMusicAllowed }) {
 
   const handleNext = () => {
     setIsQuizQuestionLoading(false);
-    setSeconds(30);
+    setSeconds(15);
     setMicOnTime(0);
     setSpeechText("");
     setSelectedOption("");
@@ -98,13 +98,13 @@ function Quiz({ setIsMusicAllowed }) {
       setQuestionStatus(true);
       setTimeout(() => {
         setQuestionStatus(false);
-      }, 2500);
+      }, 1000);
     } else {
       wrongAnswerSound();
       setQuestionStatus(false);
-    //   setTimeout(() => {
-    //     setQuestionStatus("");
-    //   }, 1500);
+      //   setTimeout(() => {
+      //     setQuestionStatus("");
+      //   }, 1500);
     }
     return responce?.data;
   };
@@ -130,7 +130,7 @@ function Quiz({ setIsMusicAllowed }) {
           givenAns: event,
           correctAns: ans.correct_answer,
           isCorrect: ans.is_correct,
-          time: 30 - Number(seconds),
+          time: 15 - Number(seconds),
         },
       ],
     });
@@ -184,7 +184,7 @@ function Quiz({ setIsMusicAllowed }) {
             givenAns: event,
             correctAns: ans.correct_answer,
             isCorrect: ans.is_correct,
-            time: 30 - Number(seconds),
+            time: 15 - Number(seconds),
           },
         ],
       });
@@ -230,7 +230,7 @@ function Quiz({ setIsMusicAllowed }) {
       {isLoading ? (
         <QuizLoading />
       ) : (
-        <div className="modal-css  flex flex-col gap-6 py-5 px-[30px] rounded-[10px] w-11/12 md:max-w-[550px] my-0 mx-auto  ">
+        <div className="modal-css mt-10  flex flex-col gap-6 py-5 px-[30px] rounded-[10px] w-5/6 md:max-w-[550px] my-0 mx-auto  ">
           <div
             //   onClick={() =>
             //     convertTextToSpeech(allQuestions?.[currentIndex]?.audio)
@@ -239,15 +239,17 @@ function Quiz({ setIsMusicAllowed }) {
           ></div>
           <div className="relative flex flex-col items-center ">
             <div className="  absolute  rounded-full w-[96.56px] h-[96.56px] py-8 px-4 border border-solid border-[#1D55FD4D] bg-white shadow-[0px_4px_14px_0px_#0000001F] flex justify-center items-center">
-              <span className=" font-LtEnergy text-3xl leading-[33.24px] font-bold text-center text-[#1D55FD]">
-                00:
-                <Timer
-                  seconds={seconds}
-                  setSeconds={setSeconds}
-                  onTimeout={handleNext}
-                  index={currentIndex}
-                />
-              </span>
+              {!openSoundPopup && (
+                <span className=" font-LtEnergy text-3xl leading-[33.24px] font-bold text-center text-[#1D55FD]">
+                  00:
+                  <Timer
+                    seconds={seconds}
+                    setSeconds={setSeconds}
+                    onTimeout={handleNext}
+                    index={currentIndex}
+                  />
+                </span>
+              )}
             </div>
 
             <div className=" mt-[48px] h-[170px] pt-[76px] pb-[50px] px-7 rounded-[20px]  bg-white shadow-[0px_4px_14px_0px_0000000D]">
@@ -349,7 +351,7 @@ function Quiz({ setIsMusicAllowed }) {
                     ? isGivenAnswerCorrect
                       ? correctResponceAnswer ==
                         allQuestions?.[currentIndex]?.options[1]
-                        ? "border-[#00AA07]"
+                        ? "border-[#00AA07] "
                         : "border-[#FA3939]"
                       : "border-[#FA3939]"
                     : "border-[#ADD1FF]"
@@ -446,10 +448,10 @@ function Quiz({ setIsMusicAllowed }) {
             />
           )}
           {questionStatus && (
-          <Popup bg="bg-transparent">
-            <CorrectAnswer/>
+            <Popup bg="bg-transparent">
+              <CorrectAnswer />
             </Popup>
-         )}
+          )}
         </div>
       )}
     </Layout>
