@@ -10,6 +10,7 @@ const useSpeechRecognition = () => {
       .map((result) => result[0])
       .map((result) => result.transcript)
       .join("");
+      console.log(transcript);
     setSpeechText(transcript);
   };
 

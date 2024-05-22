@@ -42,7 +42,7 @@ function Quiz({ setIsMusicAllowed }) {
   const [seconds, setSeconds] = useState(20);
   const [permissionToStartSound, setPermissionToStartSound] = useState(false);
   const [openSoundPopup, setOpenSoundPopup] = useState(true);
-  const [audioTime, setAudioTime] = useState(30);
+  const [audioTime, setAudioTime] = useState(20);
   const [micOnTime, setMicOnTime] = useState(0);
   const [questionStatus, setQuestionStatus] = useState("");
 
@@ -113,7 +113,7 @@ function Quiz({ setIsMusicAllowed }) {
       // }, 2500);
     }
     return responce?.data;
-  };
+  }
 
   const handleOptionChange = async (event, id) => {
     setSelectedOption(event);
