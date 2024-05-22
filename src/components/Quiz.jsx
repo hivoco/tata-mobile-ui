@@ -99,21 +99,12 @@ function Quiz({ setIsMusicAllowed }) {
       setTimeout(() => {
         setQuestionStatus(false);
       }, 1000);
-
-      // setTimeout(() => {
-      // currentIndex < 9 && handleNext();
-      // }, 3500);
     } else {
       wrongAnswerSound();
       setQuestionStatus(false);
-
-      // setTimeout(() => {
-      // setQuestionStatus("");
-      //   currentIndex < 9 && handleNext();
-      // }, 2500);
     }
     return responce?.data;
-  }
+  };
 
   const handleOptionChange = async (event, id) => {
     setSelectedOption(event);
@@ -143,6 +134,9 @@ function Quiz({ setIsMusicAllowed }) {
   };
 
   const audioTimerFunction = () => {
+    if (audioRef.current) {
+      audioRef.current.src = null;
+    }
     if (selectedOption == "") {
       setIsAnswered(true);
       enter(allQuestions?.[currentIndex]?.question_id);
@@ -255,7 +249,7 @@ function Quiz({ setIsMusicAllowed }) {
                     setSeconds={setSeconds}
                     onTimeout={handleNext}
                     index={currentIndex}
-                    isQuizQuestionLoading = {isQuizQuestionLoading}
+                    isQuizQuestionLoading={isQuizQuestionLoading}
                   />
                 </span>
               )}
@@ -283,11 +277,7 @@ function Quiz({ setIsMusicAllowed }) {
                   className="h-48"
                   ref={imageRef}
                   onClick={() => {
-                    setIsAnswered(!isAnswered);
-                    if (audioRef.current) {
-                      audioRef.current.src = null;
-                    }
-                    enter(allQuestions?.[currentIndex]?.question_id);
+                    audioTimerFunction();
                   }}
                   style={{
                     opacity: selectedOption.trim() != "" ? 0.5 : 1,
@@ -454,6 +444,7 @@ function Quiz({ setIsMusicAllowed }) {
               audioTime={audioTime}
               setAudioTime={setAudioTime}
               onTimeout={audioTimerFunction}
+              isAnswered={isAnswered}
             />
           )}
           {questionStatus && (

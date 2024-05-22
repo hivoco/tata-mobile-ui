@@ -1,7 +1,7 @@
 // Timer.js
 import React, { useEffect, useState } from "react";
 
-const AudioTimer = ({ onTimeout, audioTime, setAudioTime }) => {
+const AudioTimer = ({ onTimeout, audioTime, setAudioTime, isAnswered }) => {
   const [isInitialRender, setIsInitialRender] = useState(true);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const AudioTimer = ({ onTimeout, audioTime, setAudioTime }) => {
 
   useEffect(() => {
     if (!isInitialRender) {
-      if (audioTime === 0) {
+      if (audioTime === 0 && !isAnswered) {
         onTimeout();
       }
     } else {
