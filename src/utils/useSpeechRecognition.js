@@ -37,10 +37,12 @@ const useSpeechRecognition = () => {
   };
 
   useEffect(() => {
-    const speechRecognition=  window.SpeechRecognition ||window.webkitSpeechRecognitio
+    const speechRecognition=  window.SpeechRecognition || window.webkitSpeechRecognition
     const recognition1 = new speechRecognition();
     recognition1.interimResults = true;
-    recognition1.maxAlternatives = 4; // Corrected typo here
+    // recognition1.continuous = true;
+
+    recognition1.maxAlternatives = 20; // Corrected typo here
     recognition1.lang = "en-IN";
     setRecognition(recognition1);
 

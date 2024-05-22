@@ -39,10 +39,10 @@ function Quiz({ setIsMusicAllowed }) {
   const [isQuizQuestionLoading, setIsQuizQuestionLoading] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [seconds, setSeconds] = useState(15);
+  const [seconds, setSeconds] = useState(20);
   const [permissionToStartSound, setPermissionToStartSound] = useState(false);
   const [openSoundPopup, setOpenSoundPopup] = useState(true);
-  const [audioTime, setAudioTime] = useState(15);
+  const [audioTime, setAudioTime] = useState(30);
   const [micOnTime, setMicOnTime] = useState(0);
   const [questionStatus, setQuestionStatus] = useState("");
 
@@ -71,7 +71,7 @@ function Quiz({ setIsMusicAllowed }) {
 
   const handleNext = () => {
     setIsQuizQuestionLoading(false);
-    setSeconds(15);
+    setSeconds(20);
     setMicOnTime(0);
     setSpeechText("");
     setSelectedOption("");
@@ -100,17 +100,17 @@ function Quiz({ setIsMusicAllowed }) {
         setQuestionStatus(false);
       }, 1000);
 
-      setTimeout(() => {
-        currentIndex < 9 && handleNext();
-      }, 3500);
+      // setTimeout(() => {
+      // currentIndex < 9 && handleNext();
+      // }, 3500);
     } else {
       wrongAnswerSound();
-
       setQuestionStatus(false);
-      setTimeout(() => {
-        // setQuestionStatus("");
-        currentIndex < 9 && handleNext();
-      }, 2500);
+
+      // setTimeout(() => {
+      // setQuestionStatus("");
+      //   currentIndex < 9 && handleNext();
+      // }, 2500);
     }
     return responce?.data;
   };
@@ -136,7 +136,7 @@ function Quiz({ setIsMusicAllowed }) {
           givenAns: event,
           correctAns: ans.correct_answer,
           isCorrect: ans.is_correct,
-          time: 15 - Number(seconds),
+          time: 20 - Number(seconds),
         },
       ],
     });
@@ -154,6 +154,8 @@ function Quiz({ setIsMusicAllowed }) {
     setMicOnTime(micOnTime + 1);
 
     stopSpeechRecognition();
+
+    // if(isAnswered)
 
     if (value) {
       // micOffSound();
@@ -190,7 +192,7 @@ function Quiz({ setIsMusicAllowed }) {
             givenAns: event,
             correctAns: ans.correct_answer,
             isCorrect: ans.is_correct,
-            time: 15 - Number(seconds),
+            time: 20 - Number(seconds),
           },
         ],
       });
@@ -253,6 +255,7 @@ function Quiz({ setIsMusicAllowed }) {
                     setSeconds={setSeconds}
                     onTimeout={handleNext}
                     index={currentIndex}
+                    isQuizQuestionLoading = {isQuizQuestionLoading}
                   />
                 </span>
               )}
@@ -405,14 +408,13 @@ function Quiz({ setIsMusicAllowed }) {
                 Finish
               </button>
             ) : (
-              ""
-              // <button
-              //   onClick={() => handleNext()}
-              //   disabled={selectedOption.trim() != "" ? false : true}
-              //   className={` bg-gradient-to-r from-[#0043A6] via-[#BD00FF] to-pink-500 border-[1.3px] border-solid bg-[#B8B8B8] rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white `}
-              // >
-              //   Confirm
-              // </button>
+              <button
+                onClick={() => handleNext()}
+                disabled={selectedOption.trim() != "" ? false : true}
+                className={` bg-gradient-to-r from-[#0043A6] via-[#BD00FF] to-pink-500 border-[1.3px] border-solid bg-[#B8B8B8] rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white `}
+              >
+                Confirm
+              </button>
             )}
           </div>
           {isQuizQuestionLoading && (
