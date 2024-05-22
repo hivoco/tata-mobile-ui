@@ -21,40 +21,40 @@ function SplashScreen3({ splashScreenNo, setSplashScreenNo }) {
   }, []);
 
   return (
-    <Layout bg={"images/ss3.png"} splashScreenNo={splashScreenNo}>
-        <div className="relative flex flex-col items-center pt-11 mt-12">
-          <img
-            className={`w-[322px]  absolute -mt-8  z-10  transition-all delay-[100ms] duration-300 ease-in-out   ${
-              animation ? " mr-0  " : " -mr-[62rem] "
-            }  `}
-            src="/images/Win signed.png"
-            alt="win signed"
-          />
+    <Layout bg={"images/ss3.png"} splashScreenNo={3}>
+      <div className="relative flex flex-col items-center pt-11 mt-12">
+        <img
+          className={`w-[19.5rem]  absolute -mt-8  z-10  transition-all delay-[100ms] duration-300 ease-in-out   ${
+            animation ? " mr-0  " : " -mr-[62rem] "
+          }  `}
+          src="/images/Win signed.png"
+          alt="win signed"
+        />
 
-          <img
-            className={`absolute z-10 w-[203px] top-16   transition-all delay-[100ms] duration-300 ease-in-out   ${
-              animation ? "ml-0" : " -ml-[62rem] "
-            }  `}
-            src="/images/Jersey.png"
-            alt="jerseys"
-          />
+        <img
+          className={`absolute z-10 w-[12.6875rem] top-16   transition-all delay-[100ms] duration-300 ease-in-out   ${
+            animation ? "ml-0" : " -ml-[62rem] "
+          }  `}
+          src="/images/Jersey.png"
+          alt="jerseys"
+        />
 
-          <img
-            className={`w-full    delay-150 duration-300 ease-in-out   ${
-              animation ? "opacity-100" : " opacity-60"
-            }  `}
-            src="/svgs/tshirt-n-stars.svg"
-            alt="jerseys"
-          />
+        <img
+          className={`w-full delay-150 duration-300 ease-in-out   ${
+            animation ? "opacity-100" : " opacity-60"
+          }  `}
+          src="/svgs/tshirt-n-stars.svg"
+          alt="jerseys"
+        />
 
-          <img
-            className={`w-[328px] absolute  bottom-5   transition-all delay-[100ms] duration-300 ease-in-out   ${
-              animation ? "mb-0" : " -mb-[62rem] "
-            } `}
-            src="/images/Top 5 winners.png"
-            alt="jerseys"
-          />
-        </div>
+        <img
+          className={`w-[20.5rem] absolute  bottom-5   transition-all delay-[100ms] duration-300 ease-in-out   ${
+            animation ? "mb-0" : " -mb-[62rem] "
+          } `}
+          src="/images/Top 5 winners.png"
+          alt="jerseys"
+        />
+      </div>
     </Layout>
   );
 }

@@ -6,17 +6,7 @@ import axios from "../api/instance";
 
 function LanguageSelection() {
   const navigate = useNavigate();
-  const [animation, setAnimation] = useState(false);
-
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      setAnimation(true);
-    }, 200);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
-
+  
   const getUniqueID = async () => {
     const responce = await axios(`/guest_user?name=&phone=`);
     sessionStorage.setItem("unique_id", responce.data.unique_id);
@@ -33,59 +23,56 @@ function LanguageSelection() {
 
   const selectLanguagesUI = languages.map((language) => {
     return (
-      <div
-        onClick={() => setSelectedOption(language)}
+      <label
         key={language}
-        className={`  flex justify-between  py-3 px-5 md:py-[19px] md:px-[22px] border-solid rounded-[15px] border-2  ${
-          selectedOption === language ? "border-[#00AA07]" : "border-[#ADD1FF]"
-        }`}
+        className={`font-Inter text-[12.28px] leading-[14.87px] font-medium text-[#2B262D] flex justify-between py-[10.3px] px-[9.83px] border-solid rounded-[7.37px] border-[1.23px] 
+                      ${
+                        selectedOption === language
+                          ? "border-[#00AA07]"
+                          : "border-[#ADD1FF]"
+                      }`}
       >
-        <label
-          className="font-Inter text-[12px] leading-[15px] md:text-[20px] font-medium md:leading-[24.2px] text-left"
-          htmlFor={language}
-        >
-          {language}
-        </label>
+        {language}
 
         <input
-          className="border-[0.05px] border-solid border-[#00AA07] accent-[#00AA07] w-3 md:w-[22px]"
-          id={language}
+          className={`border-[0.61px] border-solid   w-[13.51px]  ${
+            selectedOption === language
+              ? "border-[#00AA07] accent-[#00AA07]"
+              : "border-[#00000080]"
+          }`}
           type="radio"
           name="language-option"
-          onChange={(e) => setSelectedOption(e.target.value)}
-          checked={selectedOption === language}
           value={language}
+          checked={selectedOption === language}
+          onChange={(e) => {
+            setSelectedOption(e.target.value);
+          }}
         />
-      </div>
+      </label>
     );
   });
 
   return (
     <Layout bg={"images/ss2.png"}>
-      <div
-        className={`opacity-0 ${
-          animation &&
-          "transition-all duration-200 delay-200 ease-in opacity-100"
-        } flex justify-center mt-20 md:mt-0`}
-      >
-        <div className="modal-css  flex flex-col gap-5 md:gap-[50px]  w-80 md:w-[557px]  h-auto md:h-[650px]  py-10 px-[30px]  rounded-[10px]  ">
-          <header className="flex flex-col gap-[10px ] ">
-            <h1 className="font-Inter text-xl md:text-[34px] font-bold  md:leading-[41.15px] text-left text-[#2B262D]">
+      <div className="flex justify-center items-center h-5/6">
+        <div className="shadow-[0px_-3px_0px_0px_#00000033_inset]   modal-css  flex flex-col gap-[1.125rem]   w-80   h-auto   p-6  rounded-[8.6px]  ">
+          <header className="flex flex-col gap-1 ">
+            <h1 className="font-Heebo text-[20.88px] font-bold  leading-[30.67px] text-left text-[#2B262D]">
               Language Selection.
             </h1>
 
-            <h6 className="font-Inter text-[10px] leading-[12px] md:text-base   font-normal  md:leading-[19.36px] text-left text-[#2B262D]">
+            <h6 className="font-Inter text-xs leading-[14.52px]    font-medium   text-left text-[#2B262D]">
               Select your preferred language
             </h6>
           </header>
 
-          <div className="flex flex-col gap-5">
-            <div className="flex flex-col gap-2 md:gap-[10px]">
+          <div className="flex flex-col gap-[1.125rem]">
+            <div className="flex flex-col  gap-[7.37px]">
               {selectLanguagesUI}
             </div>
 
             <button
-              className="purple-btn shadow-[4.62px_6.92px_0px_0px_black]  px-[91px] py-[18px] rounded-[9px]  font-bold leading-[19.36px] "
+              className="purple-btn shadow-[2.7px_4.05px_0px_0px_black]   py-[15.5px] rounded-[6.74px]  text-base font-bold leading-[19.36px] text-center "
               onClick={async () => handleClick()}
               type="button"
             >

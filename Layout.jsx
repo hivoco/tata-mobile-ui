@@ -22,10 +22,10 @@ function Layout({ children, bg, splashScreenNo }) {
 
   return (
     <div
-      className={`w-screen min-h-screen  bg-cover pb-10`}
+      className={`w-screen h-svh  bg-cover   bg-no-repeat`}
       style={{
         backgroundImage: `url(${bg})`,
-        backgroundPosition: "cover",
+        // backgroundSize:`100% 100%`
       }}
     >
       <div className="flex justify-between items-center pt-12 px-6">
@@ -54,32 +54,25 @@ function Layout({ children, bg, splashScreenNo }) {
         </button>
       </div>
       {children}
-      {/* {splashScreenNo ? (
+      {(splashScreenNo === 3 || splashScreenNo === 4) && (
         <img
-          className="absolute bottom-3 left-3"
+          className="absolute bottom-0 left-0"
           src="/svgs/veg-n-terms.svg"
           alt="veg"
         />
-      ) : (
-        ""
       )}
-      <img
-        className="absolute bottom-3 left-3"
-        src="/svgs/veg-n-terms.svg"
-        alt="veg"
-      /> */}
+
       {isopen && (
         <Popup>
           <div className="flex flex-col  justify-between items-center p-2 md:p-6   ">
             <div className="flex flex-col  justify-between items-center  ">
-              <img src="/gifs/exit.gif" className="w-[100px]" alt="Exit"  />
+              <img src="/gifs/exit.gif" className="w-[100px]" alt="Exit" />
               <small className="font-semibold text-lg">Exit Game</small>
               <p className="font-normal text-sm">
                 Are you sure you want to exit the game? <br />
                 Exiting now will result in loss of progress.
               </p>
             </div>
-
 
             <div className="flex justify-between items-center gap-4 w-full mt-6">
               <div

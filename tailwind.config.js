@@ -12,6 +12,7 @@ export default {
       fontFamily: {
         Inter: ["Inter", "sans-serif"],
         LtEnergy: ["LT Energy", "sans-serif"],
+        Heebo:["Heebo","sans-serif"]
       },
     },
   },

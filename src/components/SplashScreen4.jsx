@@ -26,7 +26,6 @@ function SplashScreen4({ splashScreenNo }) {
   }, []);
 
   return (
-    // absolute transition-all duration-500 -left-36   
     <Layout  bg={"/images/ss4.png"} splashScreenNo={splashScreenNo}>
       <div
         className={`opacity-0 ${

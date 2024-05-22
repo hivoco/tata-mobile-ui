@@ -30,6 +30,7 @@ function App() {
         <Route
           path="/"
           element={<Home setIsMusicAllowed={setIsMusicAllowed} />}
+          // element={<Quiz setIsMusicAllowed={setIsMusicAllowed} />}
         />
 
         <Route path="/select-language" element={<LanguageSelection />} />

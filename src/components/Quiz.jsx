@@ -232,18 +232,12 @@ function Quiz({ setIsMusicAllowed }) {
       {isLoading ? (
         <QuizLoading />
       ) : (
-        <div className="modal-css mt-10  flex flex-col gap-6 py-5 px-[30px] rounded-[10px] w-5/6 md:max-w-[550px] my-0 mx-auto  ">
-          <div
-            //   onClick={() =>
-            //     convertTextToSpeech(allQuestions?.[currentIndex]?.audio)
-            //   }
-            className="flex justify-end"
-          ></div>
+        <div className="modal-css mt-[22.81px]  flex flex-col gap-6 py-5 px-[30px] rounded-[10px] w-5/6 md:max-w-[550px] my-0 mx-auto  ">
           <div className="relative flex flex-col items-center ">
-            <div className="  absolute  rounded-full w-[96.56px] h-[96.56px] py-8 px-4 border border-solid border-[#1D55FD4D] bg-white shadow-[0px_4px_14px_0px_#0000001F] flex justify-center items-center">
+            <div className="  absolute  rounded-full w-[61.61px] h-[61.61px]  py-[20.77px] px-[18.83px] border border-solid border-[#1D55FD4D] bg-white shadow-[0px_2.55px_8.93px_0px_#0000001F] flex justify-center items-center">
               {!openSoundPopup && (
-                <span className=" font-LtEnergy text-3xl leading-[33.24px] font-bold text-center text-[#1D55FD]">
-                  00:
+                <span className=" font-LtEnergy text-[19.14px] leading-[22.02px] font-bold text-center text-[#1D55FD]">
+                  `` 00:
                   <Timer
                     seconds={seconds}
                     setSeconds={setSeconds}
@@ -255,13 +249,12 @@ function Quiz({ setIsMusicAllowed }) {
               )}
             </div>
 
-            <div className=" mt-[48px] h-[170px] pt-[76px] pb-[50px] px-7 rounded-[20px]  bg-white shadow-[0px_4px_14px_0px_0000000D]">
-              <div className="   flex flex-col gap-[14px] ">
-                <p className="font-Inter font-bold text-[#1D55FD] text-base leading-[19.36px] text-center">
+            <div className=" mt-[48px] h-[118px] pt-[76px] pb-[15.31px] px-[15.31px] rounded-[20px]  bg-white shadow-[0px_4px_14px_0px_0000000D]">
+              <div className="   flex flex-col gap-[8.93px] ">
+                <p className="font-Inter font-bold text-[#1D55FD] text-[10px] leading-[12px] text-center">
                   Question {currentIndex + 1}/10
                 </p>
-
-                <p className="font-Inter font-semibold text-[#252042] text-[11px]  leading-[13px]  text-center">
+                <p className="font-Inter font-semibold text-[#252042] text-[11px]  leading-[13.31px]  text-center">
                   {allQuestions?.[currentIndex]?.question}
                 </p>
               </div>
@@ -407,6 +400,7 @@ function Quiz({ setIsMusicAllowed }) {
               </button>
             )}
           </div>
+
           {isQuizQuestionLoading && (
             <Popup bg="bg-transparent">
               <img
