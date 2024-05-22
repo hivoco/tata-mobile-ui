@@ -25,20 +25,22 @@ function SplashScreen2({ setSplashScreenNo }) {
 
   return (
     <Layout bg={"images/ss2.png"}>
-      {isUIVisible ? (
+      {isUIVisible && (
         <div className={`flex flex-col gap-28 items-center pt-5  px-4 `}>
           {<SecondAddBgWithText animation={animation} />}
 
           <img
-            className={`${animation?"transition-all duration-500 delay-300 ease-in opacity-100":"opacity-0"} w-[100px]   animate-spin`}
+            className={`${
+              animation
+                ? "transition-all duration-500 delay-300 ease-in opacity-100 "
+                : "opacity-0"
+            } w-[100px]   animate-spin`}
             src="images/rotating-football.png"
             alt="football"
           />
 
           <img className=" " src="svgs/poweredBy.svg" alt="powered by hivoco" />
         </div>
-      ) : (
-        ""
       )}
     </Layout>
   );

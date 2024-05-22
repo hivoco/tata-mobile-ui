@@ -99,12 +99,18 @@ function Quiz({ setIsMusicAllowed }) {
       setTimeout(() => {
         setQuestionStatus(false);
       }, 1000);
+
+      setTimeout(() => {
+        currentIndex < 9 && handleNext();
+      }, 3500);
     } else {
       wrongAnswerSound();
+
       setQuestionStatus(false);
-      //   setTimeout(() => {
-      //     setQuestionStatus("");
-      //   }, 1500);
+      setTimeout(() => {
+        // setQuestionStatus("");
+        currentIndex < 9 && handleNext();
+      }, 2500);
     }
     return responce?.data;
   };
@@ -394,18 +400,19 @@ function Quiz({ setIsMusicAllowed }) {
               <button
                 onClick={() => viewScore()}
                 disabled={selectedOption.trim() != "" ? false : true}
-                className="border-[1.3px] border-solid bg-gradient-to-r from-[#0043A6] via-[#BD00FF] to-pink-500 rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white"
+                className="purple-btn border-[1.3px] border-solid bg-gradient-to-r  rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white"
               >
                 Finish
               </button>
             ) : (
-              <button
-                onClick={() => handleNext()}
-                disabled={selectedOption.trim() != "" ? false : true}
-                className={`bg-gradient-to-r from-[#0043A6] via-[#BD00FF] to-pink-500 border-[1.3px] border-solid bg-[#B8B8B8] rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white `}
-              >
-                Confirm
-              </button>
+              ""
+              // <button
+              //   onClick={() => handleNext()}
+              //   disabled={selectedOption.trim() != "" ? false : true}
+              //   className={` bg-gradient-to-r from-[#0043A6] via-[#BD00FF] to-pink-500 border-[1.3px] border-solid bg-[#B8B8B8] rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white `}
+              // >
+              //   Confirm
+              // </button>
             )}
           </div>
           {isQuizQuestionLoading && (

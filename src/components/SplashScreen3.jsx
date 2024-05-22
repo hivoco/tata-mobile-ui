@@ -22,7 +22,7 @@ function SplashScreen3({ splashScreenNo, setSplashScreenNo }) {
 
   return (
     <Layout bg={"images/ss3.png"} splashScreenNo={splashScreenNo}>
-        <div className="relative flex flex-col items-center pt-11 mt-7">
+        <div className="relative flex flex-col items-center pt-11 mt-12">
           <img
             className={`w-[322px]  absolute -mt-8  z-10  transition-all delay-[100ms] duration-300 ease-in-out   ${
               animation ? " mr-0  " : " -mr-[62rem] "
@@ -55,7 +55,6 @@ function SplashScreen3({ splashScreenNo, setSplashScreenNo }) {
             alt="jerseys"
           />
         </div>
-      
     </Layout>
   );
 }
