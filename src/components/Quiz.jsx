@@ -84,10 +84,10 @@ function Quiz({ setIsMusicAllowed }) {
     }
   };
 
-  const verifyAnswer = async (user_answer, question_id, onClick) => {
+  const verifyAnswer = async (user_answer, question_id, onClick,lang) => {
     setIsQuizQuestionLoading(true);
     const responce = await axios(
-      `/verify_answer?user_answer=${user_answer}&question_id=${question_id}&onClick=${onClick}`
+      `/verify_answer?user_answer=${user_answer}&question_id=${question_id}&onClick=${onClick}&lang=${lang}`
     );
 
     setIsAnswered(false);
@@ -98,7 +98,7 @@ function Quiz({ setIsMusicAllowed }) {
       setQuestionStatus(true);
       setTimeout(() => {
         setQuestionStatus(false);
-      }, 1000);
+      }, 2000);
     } else {
       wrongAnswerSound();
       setQuestionStatus(false);
@@ -112,7 +112,7 @@ function Quiz({ setIsMusicAllowed }) {
       audioRef.current.src = null;
     }
 
-    const ans = await verifyAnswer(event, id, true);
+    const ans = await verifyAnswer(event, id, true,lang);
     setIsGivenAnswerCorrect(ans.is_correct);
 
     setCorrectResponceAnswer(ans.correct_answer);
@@ -154,7 +154,7 @@ function Quiz({ setIsMusicAllowed }) {
     if (value) {
       // micOffSound();
 
-      const ans = await verifyAnswer(speechText, question_id, false);
+      const ans = await verifyAnswer(speechText, question_id, false,lang);
       let event = "";
       if (ans.is_correct == "true") {
         if (ans.correct_answer == allQuestions?.[currentIndex]?.options[0]) {
@@ -232,62 +232,68 @@ function Quiz({ setIsMusicAllowed }) {
       {isLoading ? (
         <QuizLoading />
       ) : (
-        <div className="modal-css mt-[22.81px]  flex flex-col gap-6 py-5 px-[30px] rounded-[10px] w-5/6 md:max-w-[550px] my-0 mx-auto  ">
-          <div className="relative flex flex-col items-center ">
-            <div className="  absolute  rounded-full w-[61.61px] h-[61.61px]  py-[20.77px] px-[18.83px] border border-solid border-[#1D55FD4D] bg-white shadow-[0px_2.55px_8.93px_0px_#0000001F] flex justify-center items-center">
-              {!openSoundPopup && (
-                <span className=" font-LtEnergy text-[19.14px] leading-[22.02px] font-bold text-center text-[#1D55FD]">
-                  `` 00:
-                  <Timer
+        <div className="mt-[22.81px] flex justify-center items-center">
+          <div className="modal-css mt-[22.81px]  flex flex-col gap-6 px-6 py-3 rounded-[14px] w-[19.5rem]  my-0 mx-auto  ">
+            
+            <div className="relative flex flex-col items-center ">
+              <div className="  absolute  rounded-full h-16 w-16   py-[20.77px] px-[9px] border border-solid border-[#1D55FD4D] bg-white shadow-[0px_2.55px_8.93px_0px_#0000001F] flex justify-center items-center">
+                {!openSoundPopup && (
+                    <Timer
                     seconds={seconds}
                     setSeconds={setSeconds}
                     onTimeout={handleNext}
                     index={currentIndex}
                     isQuizQuestionLoading={isQuizQuestionLoading}
                   />
-                </span>
-              )}
-            </div>
-
-            <div className=" mt-[48px] h-[118px] pt-[76px] pb-[15.31px] px-[15.31px] rounded-[20px]  bg-white shadow-[0px_4px_14px_0px_0000000D]">
-              <div className="   flex flex-col gap-[8.93px] ">
-                <p className="font-Inter font-bold text-[#1D55FD] text-[10px] leading-[12px] text-center">
-                  Question {currentIndex + 1}/10
-                </p>
-                <p className="font-Inter font-semibold text-[#252042] text-[11px]  leading-[13.31px]  text-center">
-                  {allQuestions?.[currentIndex]?.question}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-[30px] ">
-            <div
-              className={`flex flex-col  gap-3 justify-center items-center `}
-            >
-              <div className={` ${isAnswered && "animate-scale"}`}>
-                <img
-                  className="h-48"
-                  ref={imageRef}
-                  onClick={() => {
-                    audioTimerFunction();
-                  }}
-                  style={{
-                    opacity: selectedOption.trim() != "" ? 0.5 : 1,
-                    pointerEvents:
-                      selectedOption.trim() != "" ? "none" : "auto",
-                  }}
-                  src={isAnswered ? "/svgs/wave.svg" : "/svgs/mic.svg"}
-                  alt="mic-btn"
-                />
+                )}
               </div>
 
-              <p className="font-Inter font-semibold text-[10px] leading-[12px] text-center">
-                {isAnswered ? "Tap to Submit" : "Tap to Answer"}
-              </p>
+              <div className=" mt-[30px]  pt-10     pb-[15.31px] px-[15.31px] rounded-[8.83px]  bg-white shadow-[0px_4px_14px_0px_0000000D]">
+                <div className="   flex flex-col gap-[8.93px] ">
+                  <p className="font-Inter font-bold text-[#1D55FD] text-[10px] leading-[12px] text-center">
+                    Question {currentIndex + 1}/10
+                  </p>
+                  <p className="font-Inter font-semibold text-[#252042] text-[11px]  leading-[13.31px]  text-center">
+                    {allQuestions?.[currentIndex]?.question}
+                  </p>
+                </div>
+              </div>
+
+
             </div>
 
-            <div className="flex flex-col gap-[10px] text-[#2B262D]">
+            <div className="flex flex-col gap-6 ">
+              <div
+                className={`flex flex-col  gap-2 justify-center items-center `}
+              >
+                <div className={` ${isAnswered && "animate-scale"}`}>
+                  <img
+                    className="h-[122px]"
+                    ref={imageRef}
+                    onClick={() => {
+                      audioTimerFunction();
+                    }}
+                    style={{
+                      opacity: selectedOption.trim() != "" ? 0.5 : 1,
+                      pointerEvents:
+                        selectedOption.trim() != "" ? "none" : "auto",
+                    }}
+                    src={isAnswered ? "/svgs/wave.svg" : "/svgs/mic.svg"}
+                    alt="mic-btn"
+                  />
+                </div>
+
+                <p className="border h-min font-Inter text-[10px] font-normal leading-[12.1px] text-center text-[#2B262D] line-clamp-1	truncate">
+                  Your Answer is 
+                  <u className="pl-1 underline  text-[#1D55FD]  text-sm  font-semibold 	">
+                    {speechText ?speechText :"speak now"} 
+                  </u>
+                </p>
+                
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-[7.66px] text-[#2B262D]">
               <div
                 onClick={() =>
                   handleOptionChange(
@@ -298,7 +304,7 @@ function Quiz({ setIsMusicAllowed }) {
                 style={{
                   pointerEvents: selectedOption != "" ? "none" : "auto",
                 }}
-                className={`py-[19px] px-[22px] border-2  ${
+                className={`  ${
                   correctResponceAnswer
                     ? isGivenAnswerCorrect
                       ? correctResponceAnswer ==
@@ -307,11 +313,11 @@ function Quiz({ setIsMusicAllowed }) {
                         : "border-[#FA3939]"
                       : "border-[#FA3939]"
                     : "border-[#ADD1FF] "
-                }  flex justify-between rounded-[15px] `}
+                }  py-[11px] px-[10.21px]  flex justify-between rounded-[7.66px] border-[1.28px]`}
                 // className="flex justify-between items-center rounded-[7.7px] px-[10.5px] border border-[#ADD1FF]"
               >
                 <label
-                  className="font-Inter text-[20px] font-medium leading-[24.2px] text-left "
+                  className="font-Inter text-[12.76px] font-medium leading-[15.44px] text-left "
                   htmlFor="option2"
                 >
                   {allQuestions
@@ -319,7 +325,7 @@ function Quiz({ setIsMusicAllowed }) {
                     : "option 1"}
                 </label>
                 <input
-                  className={`border  border-[#00000080] bg-[#F5F5F5] w-[22px]`}
+                  className={`border-[0.64px] border-solid  border-[#00000080] bg-[#F5F5F5] w-[14.04px]`}
                   type="radio"
                   value={allQuestions?.[currentIndex]?.options[0]}
                   checked={
@@ -347,11 +353,11 @@ function Quiz({ setIsMusicAllowed }) {
                         : "border-[#FA3939]"
                       : "border-[#FA3939]"
                     : "border-[#ADD1FF]"
-                } py-[19px] px-[22px] border-2   flex justify-between rounded-[15px] `}
+                } py-[11px] px-[10.21px]  flex justify-between rounded-[7.66px] border-[1.28px] `}
                 // className="flex justify-between items-center rounded-[7.7px] px-[10.5px] border border-[#ADD1FF]"
               >
                 <label
-                  className="font-Inter text-[20px] font-medium leading-[24.2px] text-left"
+                  className="font-Inter text-[12.76px] font-medium leading-[15.44px] text-left "
                   htmlFor="option3"
                 >
                   {allQuestions
@@ -359,7 +365,7 @@ function Quiz({ setIsMusicAllowed }) {
                     : "option 2"}
                 </label>
                 <input
-                  className="border border-solid border-[#00000080] bg-[#F5F5F5] w-[22px] "
+                  className={`border-[0.64px] border-solid  border-[#00000080] bg-[#F5F5F5] w-[14.04px]`}
                   type="radio"
                   value={allQuestions?.[currentIndex]?.options[1]}
                   checked={
@@ -370,37 +376,38 @@ function Quiz({ setIsMusicAllowed }) {
                 />
               </div>
             </div>
-          </div>
 
-          <div className=" flex gap-4 items-center">
-            <button
-              onClick={() => handleNext()}
-              className={` border-[1.3px] border-solid border-[#1D55FD] rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-[#1D55FD] ${
-                currentIndex < 9 ? "visible" : "invisible"
-              } `}
-            >
-              Skip
-            </button>
-
-            {currentIndex === 9 ? (
-              <button
-                onClick={() => viewScore()}
-                disabled={selectedOption.trim() != "" ? false : true}
-                className="purple-btn border-[1.3px] border-solid bg-gradient-to-r  rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white"
-              >
-                Finish
-              </button>
-            ) : (
+            <div className=" flex gap-[9.93px] items-center">
               <button
                 onClick={() => handleNext()}
-                disabled={selectedOption.trim() != "" ? false : true}
-                className={` bg-gradient-to-r from-[#0043A6] via-[#BD00FF] to-pink-500 border-[1.3px] border-solid bg-[#B8B8B8] rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white `}
+                className={` border-[1.28px]  border-solid border-[#1D55FD] rounded-[6.41px]  py-[13.95px] w-1/2  font-Inter text-[10.96px] font-semibold leading-[13.26px] text-center text-[#1D55FD] ${
+                  currentIndex < 9 ? "visible" : "invisible"
+                } `}
               >
-                Confirm
+                Skip
               </button>
-            )}
-          </div>
 
+              {currentIndex === 9 ? (
+                <button
+                  onClick={() => viewScore()}
+                  disabled={selectedOption.trim() != "" ? false : true}
+                  className="purple-btn border-[1.3px] border-solid bg-gradient-to-r  rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white"
+                >
+                  Finish
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleNext()}
+                  disabled={selectedOption.trim() !== "" ? false : true}
+                  className={`${
+                    selectedOption.trim() !== "" ? "purple-btn  shadow-[2.56px_3.85px_0px_0px_black]" : "bg-[#B8B8B8]"
+                  }   border-[1.28px] border-solid   rounded-[6.41px]  py-[13.95px] w-1/2  font-Inter text-[10.96px] font-semibold leading-[13.26px] text-center text-white `}
+                >
+                  Confirm
+                </button>
+              )}
+            </div>
+          </div>
           {isQuizQuestionLoading && (
             <Popup bg="bg-transparent">
               <img

@@ -17,9 +17,9 @@ const Timer = ({ onTimeout, seconds, setSeconds, index,isQuizQuestionLoading }) 
   }, [seconds,isQuizQuestionLoading]);
 
   return (
-    <small className=" font-OdibeeSans text-3xl leading-[33.24px] font-normal text-center text-[#1D55FD]">
-      {seconds < 10 ? `0${seconds}` : seconds}{" "}
-    </small>
+    <span className=" font-LtEnergy text-[19.14px] leading-[22.02px] font-bold text-center text-[#1D55FD] text-nowrap">
+     {"00 :"}   {seconds < 10 ? ` 0${seconds}` : seconds}
+    </span>
   );
 };
 

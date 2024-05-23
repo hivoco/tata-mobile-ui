@@ -11,14 +11,16 @@ function FinalScore() {
 
   return (
     <Layout bg={"/images/ss3.png"}>
-      <div className="modal-css  w-3/4 m-auto p-4 rounded-[9px] mt-[113px]">
+      <div className="modal-css  w-3/4 m-auto p-4 rounded-[9px] mt-[113px] shadow-[0px_3px_6px_0px_#0000003B]   shadow-[0px_3px_6px_0px_#00000029]   ">
         <div className="absolute  z-10  top-40 left-0 w-screen ">
           <img src="/gifs/celebration.gif" alt="celebration" />
         </div>
 
-        <div
+
+
+        <div      
           className="my-0 left-[1px] flex flex-col gap-[33.5px]      
-        shadow-[0px_32px_41px_-23px_#18181C12]  rounded-[10px]   "
+        rounded-[10px]   "
         >
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-[10px] items-center">
@@ -77,6 +79,7 @@ function FinalScore() {
            Submit Your Score
           </button>
         </div>
+
       </div>
     </Layout>
   );
