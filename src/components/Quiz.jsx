@@ -234,16 +234,16 @@ function Quiz({ setIsMusicAllowed }) {
       ) : (
         <div className="mt-[22.81px] flex justify-center items-center">
           <div className="modal-css mt-[22.81px]  flex flex-col gap-6 px-6 py-3 rounded-[14px] w-[19.5rem]  my-0 mx-auto  ">
-            
             <div className="relative flex flex-col items-center ">
               <div className="  absolute  rounded-full h-16 w-16   py-[20.77px] px-[9px] border border-solid border-[#1D55FD4D] bg-white shadow-[0px_2.55px_8.93px_0px_#0000001F] flex justify-center items-center">
                 {!openSoundPopup && (
-                    <Timer
+                  <Timer
                     seconds={seconds}
                     setSeconds={setSeconds}
                     onTimeout={handleNext}
                     index={currentIndex}
                     isQuizQuestionLoading={isQuizQuestionLoading}
+                    autoSubmit={viewScore}
                   />
                 )}
               </div>
@@ -258,8 +258,6 @@ function Quiz({ setIsMusicAllowed }) {
                   </p>
                 </div>
               </div>
-
-
             </div>
 
             <div className="flex flex-col gap-6 ">
@@ -283,13 +281,14 @@ function Quiz({ setIsMusicAllowed }) {
                   />
                 </div>
 
-                <p className="border h-min font-Inter text-[10px] font-normal leading-[12.1px] text-center text-[#2B262D] line-clamp-1	truncate">
-                  Your Answer is 
-                  <u className="pl-1 underline  text-[#1D55FD]  text-sm  font-semibold 	">
-                    {speechText ?speechText :"speak now"} 
-                  </u>
-                </p>
-                
+                {speechText && (
+                  <p className=" font-Inter text-[10px] font-normal leading-[12.1px] text-center text-[#2B262D] line-clamp-1	truncate">
+                    <u className="pl-1 underline  text-[#1D55FD]  text-sm  font-semibold 	">
+                      {speechText}
+                    </u>
+                  </p>
+                )}
+
               </div>
             </div>
 
@@ -400,7 +399,9 @@ function Quiz({ setIsMusicAllowed }) {
                   onClick={() => handleNext()}
                   disabled={selectedOption.trim() !== "" ? false : true}
                   className={`${
-                    selectedOption.trim() !== "" ? "purple-btn  shadow-[2.56px_3.85px_0px_0px_black]" : "bg-[#B8B8B8]"
+                    selectedOption.trim() !== ""
+                      ? "purple-btn  shadow-[2.56px_3.85px_0px_0px_black]"
+                      : "bg-[#B8B8B8]"
                   }   border-[1.28px] border-solid   rounded-[6.41px]  py-[13.95px] w-1/2  font-Inter text-[10.96px] font-semibold leading-[13.26px] text-center text-white `}
                 >
                   Confirm

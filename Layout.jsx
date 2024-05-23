@@ -22,7 +22,7 @@ function Layout({ children, bg, splashScreenNo }) {
 
   return (
     <div
-      className={`w-screen h-screen overflow-clip  bg-cover   bg-no-repeat `}
+      className={`w-screen h-screen overflow-x-hidden  bg-cover   bg-no-repeat `}
       style={{
         backgroundImage: `url(${bg})`,
         // backgroundSize:`100% 100%`
@@ -64,36 +64,41 @@ function Layout({ children, bg, splashScreenNo }) {
 
       {isopen && (
         <Popup>
-          <div className="flex flex-col  justify-between items-center p-2 md:p-6   ">
-            <div className="flex flex-col  justify-between items-center  ">
-              <img src="/gifs/exit.gif" className="w-[100px]" alt="Exit" />
-              
+          <div className="flex flex-col  justify-between items-center gap-6 py-4 px-6 ">
+              <div className="flex flex-col gap-2  justify-between items-center  ">
+                  <div className="flex flex-col gap-3">
+                  <img src="/gifs/exit.gif" className="w-[100px]" alt="Exit" />
+                  <small className="font-DarkerGrotesque font-bold text-[28px] leading-[24px] text-left  tracking-[-0.26px]">Exit Game</small>
+                  </div>
 
-              <small className="font-DarkerGrotesque font-bold text-[28px] leading-[24px] text-left  tracking-[-0.26px]">Exit Game</small>
-              <p className="font-Inter font-normal text-[12px] leading-[16px] text-center">
-                Are you sure you want to exit the game? <br />
-                Exiting now will result in loss of progress.
-              </p>
-            </div>
+                  <p className="font-Inter font-normal text-[12px] leading-[16px] text-center">
+                    Are you sure you want to exit the game? <br />
+                    Exiting now will result in loss of progress.
+                  </p>
+              </div>
 
-            <div className="flex justify-between items-center gap-4 w-full mt-6">
-      
+            <div className="font-Inter text-[12px] font-medium leading-[14.52px] text-center flex justify-between items-center gap-3 w-full ">
               <div
                 onClick={() => handlePopup()}
-                className=" border cursor-pointer text-[#1D55FD] border-[#1D55FD] rounded-lg flex justify-center items-center  py-2 px-4 w-[100px] "
+                className="outlined-btn  border cursor-pointer text-[#1D55FD]  rounded-[6.41px] flex justify-center items-center  py-[13.95px] px-4 w-1/2 "
               >
                 <span className="font-medium text-base cursor-pointer">
                   No
                 </span>
               </div>
               <div
+              
                 onClick={() => navigate("/")}
-                className=" shadow-[2.5px_3.85px_0px_0px_black] text-white cursor-pointer  rounded-lg flex items-center justify-center w-[100px]   py-2 px-4  purple-btn"
+                className=" shadow-[2.56px_3.85px_0px_0px_black] text-white cursor-pointer rounded-[6.41px] flex items-center justify-center w-1/2
+                   py-[13.95px] px-[52px] purple-btn"
               >
                 <span className="font-medium text-base">Yes</span>
               </div>
             </div>
+
+
           </div>
+
         </Popup>
       )}
     </div>

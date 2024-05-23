@@ -5,7 +5,7 @@ function TableBody({ data }) {
     return (
       <tr
         key={index}
-        className={`font-Inter flex justify-between items-center  py-3 px-2 rounded-[4.22px] gap-12 shadow-[0px_1.7px_10.1px_0px_#00000026]
+        className={`font-Inter flex justify-between items-center  py-3 pl-2 pr-[13.57px] rounded-[4.22px] gap-12 shadow-[0px_1.7px_10.1px_0px_#00000026]
             ${
               index <= 2
                 ? " bg-gradient-to-r from-[#FFEAE1] to-[#F6D837]"
@@ -13,8 +13,8 @@ function TableBody({ data }) {
             } ${
           isLastRow ? "bg-gradient-to-r from-[#A409F4] to-[#2038B5]" : ""
         } 
-            
-            `}
+    
+        `}
       >
         <td className="w-1/2 flex gap-[14px] items-center  ">
           {index <= 2 ? (
@@ -37,7 +37,7 @@ function TableBody({ data }) {
           )}
 
           <div
-            className={`font-Inter text-xs leading-[41.8px]  text-[19px] text-left font-bold flex  items-center gap-[6px]  ${
+            className={`font-Inter text-xs   text-[19px] text-left font-bold flex  items-center gap-[6px]  ${
               isLastRow ? "text-white" : "text-[#252042]"
             }    `}
           >
@@ -53,7 +53,7 @@ function TableBody({ data }) {
         </td>
 
         <td
-          className={` flex gap-[34px] font-Inter text-xs font-semibold leading-[14.5px]  text-left text-black  ${
+          className={`w-[30%] flex justify-between font-Inter text-xs font-semibold leading-[14.5px]  text-left text-black  ${
             isLastRow ? "text-white" : ""
           }`}
         >
