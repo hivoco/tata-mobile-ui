@@ -5,12 +5,12 @@ const useSpeechRecognition = () => {
   const [speechText, setSpeechText] = useState("");
   const imageRef = useRef();
 
+
   const handleSpeechResult = (e) => {
     const transcript = Array.from(e.results)
       .map((result) => result[0])
       .map((result) => result.transcript)
       .join("");
-      console.log(transcript);
     setSpeechText(transcript);
   };
 
@@ -29,6 +29,7 @@ const useSpeechRecognition = () => {
 
   };
 
+
   const stopSpeechRecognition = () => {
 
     recognition?.stop();
@@ -38,7 +39,7 @@ const useSpeechRecognition = () => {
   };
 
   useEffect(() => {
-    const speechRecognition=  window.SpeechRecognition || window.webkitSpeechRecognition
+    const speechRecognition=  window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition
     const recognition1 = new speechRecognition();
     recognition1.interimResults = true;
     // recognition1.continuous = true;
@@ -50,7 +51,10 @@ const useSpeechRecognition = () => {
     recognition1.addEventListener("result", handleSpeechResult);
     recognition1.addEventListener("end", handleSpeechEnd);
 
+    // const timer=setTimeout(()=>handleSpeechEnd,10 *5000)
+
     return () => {
+      // clearTimeout(timer)
       recognition1.removeEventListener("result", handleSpeechResult);
       recognition1.removeEventListener("end", handleSpeechEnd);
     };
@@ -62,7 +66,7 @@ const useSpeechRecognition = () => {
     setSpeechText,
     startSpeechRecognition,
     stopSpeechRecognition,
-    imageRef
+    imageRef,
   };
 };
 

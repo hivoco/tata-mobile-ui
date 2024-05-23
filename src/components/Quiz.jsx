@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 // import { setDataBeforeLogin } from "../api/endpoint";
 import {
   debounce,
+  decodeUnicode,
   micOffSound,
   micOnSound,
   rightAnswerSound,
@@ -31,6 +32,7 @@ function Quiz({ setIsMusicAllowed }) {
   const lang = searchParams.get("lang");
   const navigate = useNavigate();
   let audioRef = useRef();
+  const abortControllerRef = useRef(null);
   const [allQuestions, setAllQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
@@ -70,6 +72,9 @@ function Quiz({ setIsMusicAllowed }) {
   }, []);
 
   const handleNext = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+  }
     setIsQuizQuestionLoading(false);
     setSeconds(20);
     setMicOnTime(0);
@@ -85,9 +90,11 @@ function Quiz({ setIsMusicAllowed }) {
   };
 
   const verifyAnswer = async (user_answer, question_id, onClick,lang) => {
+    abortControllerRef.current = new AbortController();
+    const signal = abortControllerRef.current.signal;
     setIsQuizQuestionLoading(true);
     const responce = await axios(
-      `/verify_answer?user_answer=${user_answer}&question_id=${question_id}&onClick=${onClick}&lang=${lang}`
+      `/verify_answer?user_answer=${user_answer}&question_id=${question_id}&onClick=${onClick}&lang=${lang}`,{signal}
     );
 
     setIsAnswered(false);
@@ -103,6 +110,8 @@ function Quiz({ setIsMusicAllowed }) {
       wrongAnswerSound();
       setQuestionStatus(false);
     }
+    
+
     return responce?.data;
   };
 
@@ -204,7 +213,6 @@ function Quiz({ setIsMusicAllowed }) {
       startSpeechRecognition();
     }
   };
-
   const setDataBeforeLogin = async (userResponceArray) => {
     await axios.post(`/before_login_quiz_data`, {
       uuid: userResponceArray.uuid,
@@ -226,6 +234,9 @@ function Quiz({ setIsMusicAllowed }) {
       `/quiz/get-your-final-score?score=${responce.data.score}&time=${responce.data.time}&correct=${responce.data.totalCorrectAns}`
     );
   };
+
+
+ 
 
   return (
     <Layout bg={"/images/ss3.png"}>
@@ -306,8 +317,8 @@ function Quiz({ setIsMusicAllowed }) {
                 className={`  ${
                   correctResponceAnswer
                     ? isGivenAnswerCorrect
-                      ? correctResponceAnswer ==
-                        allQuestions?.[currentIndex]?.options[0]
+                      ? correctResponceAnswer.trim() ==
+                      allQuestions?.[currentIndex]?.options[0].trim()
                         ? "border-[#00AA07]"
                         : "border-[#FA3939]"
                       : "border-[#FA3939]"
@@ -346,8 +357,8 @@ function Quiz({ setIsMusicAllowed }) {
                 className={` ${
                   correctResponceAnswer
                     ? isGivenAnswerCorrect
-                      ? correctResponceAnswer ==
-                        allQuestions?.[currentIndex]?.options[1]
+                      ? correctResponceAnswer.trim() ==
+                    allQuestions?.[currentIndex]?.options[1].trim()
                         ? "border-[#00AA07] "
                         : "border-[#FA3939]"
                       : "border-[#FA3939]"

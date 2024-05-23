@@ -54,7 +54,7 @@ function LanguageSelection() {
 
   return (
     <Layout bg={"images/ss2.png "}>
-      <div className="flex justify-center h-5/6 items-center ">
+      <div className="flex justify-center mt-[103px]">
         <div className="shadow-[0px_-3px_0px_0px_#00000033_inset]   modal-css  flex flex-col gap-[1.125rem]   w-80   h-auto   p-6  rounded-[8.6px]  ">
           <header className="flex flex-col gap-1 ">
             <h1 className="font-Heebo text-[20.88px] font-bold  leading-[30.67px] text-left text-[#2B262D]">
