@@ -39,7 +39,7 @@ const useSpeechRecognition = () => {
   };
 
   useEffect(() => {
-    const speechRecognition=  window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition
+    const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition
     const recognition1 = new speechRecognition();
     recognition1.interimResults = true;
     // recognition1.continuous = true;
@@ -57,7 +57,7 @@ const useSpeechRecognition = () => {
       // clearTimeout(timer)
       recognition1.removeEventListener("result", handleSpeechResult);
       recognition1.removeEventListener("end", handleSpeechEnd);
-    };
+    }
   }, []);
 
   return {
