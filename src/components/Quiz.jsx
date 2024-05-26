@@ -75,6 +75,8 @@ function Quiz({ setIsMusicAllowed, platform }) {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
+
+    abortControllerRef.current = null;
     setIsQuizQuestionLoading(false);
     setSeconds(20);
     setMicOnTime(0);
@@ -90,16 +92,24 @@ function Quiz({ setIsMusicAllowed, platform }) {
   };
 
   const verifyAnswer = async (user_answer, question_id, onClick, lang) => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
     abortControllerRef.current = new AbortController();
+
     const signal = abortControllerRef.current.signal;
     setIsQuizQuestionLoading(true);
-    const responce = await axios.post(`/verify_answer`, {
-      user_answer,
-      question_id,
-      onClick,
-      lang,
-      platform,
-    });
+    const responce = await axios.post(
+      `/verify_answer`,
+      {
+        user_answer,
+        question_id,
+        onClick,
+        lang,
+        platform,
+      },
+      { signal }
+    );
 
     setIsAnswered(false);
     setIsQuizQuestionLoading(false);
@@ -119,6 +129,9 @@ function Quiz({ setIsMusicAllowed, platform }) {
   };
 
   const handleOptionChange = async (event, id) => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
     setSelectedOption(event);
     if (audioRef.current) {
       audioRef.current.src = null;

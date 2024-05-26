@@ -80,6 +80,42 @@ const getPlatform = () => {
   return "unknown";
 };
 
+function processAudioBlob(blob) {
+  // Convert Blob to ArrayBuffer
+  blob.arrayBuffer().then((arrayBuffer) => {
+    // Create an AudioContext
+    const audioContext = new (window.AudioContext ||
+      window.webkitAudioContext)();
+
+    // Decode the audio data
+    audioContext.decodeAudioData(arrayBuffer, (audioBuffer) => {
+      // Process the audio data
+      analyzeAudio(audioBuffer);
+    });
+  });
+}
+
+function analyzeAudio(audioBuffer) {
+  const rawData = audioBuffer.getChannelData(0); // Get the data from the first channel
+  const samples = 1000; // Number of samples to analyze
+  const blockSize = Math.floor(rawData.length / samples); // Size of each block of samples
+  let sumOfSquares = 0;
+  let silenceThreshold = 0.01; // Threshold for detecting silence
+  let silenceCount = 0;
+
+  for (let i = 0; i < samples; i++) {
+    let sum = 0;
+    for (let j = 0; j < blockSize; j++) {
+      sum += rawData[i * blockSize + j];
+    }
+    let average = sum / blockSize;
+    sumOfSquares += average * average;
+    if (Math.abs(average) < silenceThreshold) {
+      silenceCount++;
+    }
+  }
+}
+
 export {
   debounce,
   micOnSound,
@@ -89,4 +125,5 @@ export {
   decodeUnicode,
   blobToBase64,
   getPlatform,
+  processAudioBlob,
 };

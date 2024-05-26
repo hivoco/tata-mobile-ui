@@ -40,7 +40,8 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
   const [seconds, setSeconds] = useState(20);
-  const [speakingDetected, setSpeakingDetected] = useState(false);
+  const abortControllerRef = useRef(null);
+
   const [isGivenAnswerCorrect, setIsGivenAnswerCorrect] = useState(false);
   const [correctResponceAnswer, setCorrectResponceAnswer] = useState("");
   const [isQuizQuestionLoading, setIsQuizQuestionLoading] = useState(false);
@@ -68,6 +69,9 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
     setOpenSoundPopup(true);
   }, 200);
   const handleOptionChange = async (event, id) => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
     stopRecording();
     if (audioRef.current) {
       audioRef.current.src = null;
@@ -96,14 +100,24 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
   };
 
   const verifyAnswer = async (user_answer, question_id, onClick, lang) => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    abortControllerRef.current = new AbortController();
+
+    const signal = abortControllerRef.current.signal;
     setIsQuizQuestionLoading(true);
-    const responce = await axios.post(`/verify_answer`, {
-      user_answer,
-      question_id,
-      onClick,
-      lang,
-      platform,
-    });
+    const responce = await axios.post(
+      `/verify_answer`,
+      {
+        user_answer,
+        question_id,
+        onClick,
+        lang,
+        platform,
+      },
+      { signal }
+    );
     setIsQuizQuestionLoading(false);
 
     if (responce?.data?.is_correct == "true") {
@@ -132,6 +146,9 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
   };
 
   const handleNext = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
     stopRecording();
     setSelectedOption("");
     setIsQuizQuestionLoading(false);
@@ -151,17 +168,6 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
     //   startRecording();
     // }
   };
-
-  useEffect(() => {
-    const handleAudioAnalysis = () => {
-      setSpeakingDetected(Math.random() > 0.5);
-    };
-
-    if (isRecording) {
-      const interval = setInterval(handleAudioAnalysis, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [isRecording]);
 
   const handleRecordingComplete = async () => {
     let base64_audio = null;
@@ -218,7 +224,7 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
             .catch((err) => console.log(err));
         })
         .catch((err) => console.log(err));
-      console.log("res", base64_audio);
+     
     }
   };
 
