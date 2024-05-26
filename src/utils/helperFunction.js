@@ -19,16 +19,6 @@ const micOffSound = () => {
   audio.play();
 };
 
-const rightAnswerSound = () => {
-  const audio = new Audio("/sounds/right_ans_tone.mp3");
-  audio.volume = 0.5;
-  audio.play();
-};
-const wrongAnswerSound = () => {
-  const audio = new Audio("/sounds/wrong_ans_sound.wav");
-  audio.volume = 0.5;
-  audio.play();
-};
 
 const decodeUnicode = (unicodeString) => {
   return unicodeString.replace(/\\u[\dA-F]{4}/gi, (match) => {
@@ -120,8 +110,6 @@ export {
   debounce,
   micOnSound,
   micOffSound,
-  rightAnswerSound,
-  wrongAnswerSound,
   decodeUnicode,
   blobToBase64,
   getPlatform,

@@ -8,8 +8,6 @@ import {
   debounce,
   micOffSound,
   micOnSound,
-  rightAnswerSound,
-  wrongAnswerSound,
 } from "../utils/helperFunction";
 import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import Timer from "./Timer";
@@ -18,6 +16,7 @@ import CorrectAnswer from "./CorrectAnswer";
 import AudioPrompt from "./AudioPrompt";
 import Popup from "./Popup";
 import QuizLoading from "./QuizLoading";
+import SoundOnAnswer from "./SoundOnAnswer";
 
 function RecorderQuiz({ setIsMusicAllowed, platform }) {
   const navigate = useNavigate();
@@ -36,6 +35,7 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
     mediaRecorder,
     InVisible,
   } = useVoiceRecorder();
+
   const [allQuestions, setAllQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
@@ -51,6 +51,7 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
   const [audioTime, setAudioTime] = useState(20);
   const [micOnTime, setMicOnTime] = useState(0);
   const [questionStatus, setQuestionStatus] = useState("");
+
   let audioRef = useRef();
   const [userResponceArray, setUserResponceArray] = useState({
     uuid: sessionStorage.getItem("unique_id"),
@@ -121,14 +122,17 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
     setIsQuizQuestionLoading(false);
 
     if (responce?.data?.is_correct == "true") {
-      rightAnswerSound();
+      // rightAnswerSound();
       setQuestionStatus(true);
       setTimeout(() => {
-        setQuestionStatus(false);
+        setQuestionStatus("");
       }, 2000);
     } else {
-      wrongAnswerSound();
+      // wrongAnswerSound();
       setQuestionStatus(false);
+      setTimeout(() => {
+        setQuestionStatus("");
+      }, 1000);
     }
 
     return responce?.data;
@@ -224,7 +228,6 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
             .catch((err) => console.log(err));
         })
         .catch((err) => console.log(err));
-     
     }
   };
 
@@ -406,8 +409,12 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
 
             <div className=" flex gap-[9.93px] items-center">
               <button
-                onClick={() => handleNext()}
-                className={` border-[1.28px]  border-solid border-[#1D55FD] rounded-[6.41px]  py-[13.95px] w-1/2  font-Inter text-[10.96px] font-semibold leading-[13.26px] text-center text-[#1D55FD] ${
+                onClick={() => !isRecording && handleNext()}
+                className={`    ${
+                  !isRecording
+                    ? "border-[#1D55FD] text-[#1D55FD]"
+                    : "bg-[#B8B8B8] text-white"
+                }   border-[1.28px]  border-solid  rounded-[6.41px]  py-[13.95px] w-1/2  font-Inter text-[10.96px] font-semibold leading-[13.26px] text-center ${
                   currentIndex < 9 ? "visible" : "invisible"
                 } `}
               >
@@ -418,7 +425,11 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
                 <button
                   onClick={() => viewScore()}
                   disabled={selectedOption.trim() != "" ? false : true}
-                  className="purple-btn border-[1.3px] border-solid bg-gradient-to-r  rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white"
+                  className={`${
+                    selectedOption.trim() !== ""
+                      ? "purple-btn  shadow-[2.56px_3.85px_0px_0px_black]"
+                      : "bg-[#B8B8B8]"
+                  }       rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white`}
                 >
                   Finish
                 </button>
@@ -458,7 +469,7 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
           )}
 
           {permissionToStartSound ? (
-            <div className="hidden">
+            <div className="hidden ">
               <audio
                 ref={audioRef}
                 id="audioid"
@@ -470,6 +481,9 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
               ></audio>
             </div>
           ) : null}
+
+          <SoundOnAnswer questionStatus={questionStatus} />
+
           {permissionToStartSound && (
             <AudioTimer
               audioTime={audioTime}

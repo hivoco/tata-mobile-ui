@@ -8,8 +8,6 @@ import {
   decodeUnicode,
   micOffSound,
   micOnSound,
-  rightAnswerSound,
-  wrongAnswerSound,
 } from "../utils/helperFunction";
 import Timer from "./Timer";
 import Popup from "./Popup";
@@ -18,6 +16,7 @@ import AudioPrompt from "./AudioPrompt";
 import AudioTimer from "./AudioTimer";
 import useSpeechRecognition from "../utils/useSpeechRecognition";
 import CorrectAnswer from "../components/CorrectAnswer";
+import SoundOnAnswer from "./SoundOnAnswer";
 
 function Quiz({ setIsMusicAllowed, platform }) {
   const {
@@ -28,6 +27,7 @@ function Quiz({ setIsMusicAllowed, platform }) {
     stopSpeechRecognition,
     imageRef,
   } = useSpeechRecognition();
+
   const [searchParams] = useSearchParams();
   const lang = searchParams.get("lang");
   const navigate = useNavigate();
@@ -72,6 +72,7 @@ function Quiz({ setIsMusicAllowed, platform }) {
   }, []);
 
   const handleNext = () => {
+
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -115,14 +116,16 @@ function Quiz({ setIsMusicAllowed, platform }) {
     setIsQuizQuestionLoading(false);
 
     if (responce?.data?.is_correct == "true") {
-      rightAnswerSound();
+      // rightAnswerSound();
       setQuestionStatus(true);
       setTimeout(() => {
-        setQuestionStatus(false);
+        setQuestionStatus("");
       }, 2000);
     } else {
-      wrongAnswerSound();
       setQuestionStatus(false);
+      setTimeout(() => {
+        setQuestionStatus("");
+      }, 1000);
     }
 
     return responce?.data;
@@ -401,8 +404,12 @@ function Quiz({ setIsMusicAllowed, platform }) {
 
             <div className=" flex gap-[9.93px] items-center">
               <button
-                onClick={() => handleNext()}
-                className={` border-[1.28px]  border-solid border-[#1D55FD] rounded-[6.41px]  py-[13.95px] w-1/2  font-Inter text-[10.96px] font-semibold leading-[13.26px] text-center text-[#1D55FD] ${
+                onClick={() => !isAnswered && handleNext()}
+                className={`  ${
+                  !isAnswered
+                    ? "border-[#1D55FD] text-[#1D55FD]"
+                    : "bg-[#B8B8B8] text-white"
+                }  border-[1.28px]  border-solid rounded-[6.41px]  py-[13.95px] w-1/2  font-Inter text-[10.96px] font-semibold leading-[13.26px] text-center ${
                   currentIndex < 9 ? "visible" : "invisible"
                 } `}
               >
@@ -413,7 +420,11 @@ function Quiz({ setIsMusicAllowed, platform }) {
                 <button
                   onClick={() => viewScore()}
                   disabled={selectedOption.trim() != "" ? false : true}
-                  className="purple-btn border-[1.3px] border-solid bg-gradient-to-r  rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white"
+                  className={`${
+                    selectedOption.trim() !== ""
+                      ? "purple-btn  shadow-[2.56px_3.85px_0px_0px_black]"
+                      : "bg-[#B8B8B8]"
+                  }    rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white`}
                 >
                   Finish
                 </button>
@@ -423,9 +434,9 @@ function Quiz({ setIsMusicAllowed, platform }) {
                   disabled={selectedOption.trim() !== "" ? false : true}
                   className={`${
                     selectedOption.trim() !== ""
-                      ? "purple-btn  shadow-[2.56px_3.85px_0px_0px_black]"
+                      ? "purple-btn  border-[1.28px] border-solid   shadow-[2.56px_3.85px_0px_0px_black]"
                       : "bg-[#B8B8B8]"
-                  }   border-[1.28px] border-solid   rounded-[6.41px]  py-[13.95px] w-1/2  font-Inter text-[10.96px] font-semibold leading-[13.26px] text-center text-white `}
+                  }    rounded-[6.41px]  py-[13.95px] w-1/2  font-Inter text-[10.96px] font-semibold leading-[13.26px] text-center text-white `}
                 >
                   Confirm
                 </button>
@@ -464,6 +475,9 @@ function Quiz({ setIsMusicAllowed, platform }) {
               ></audio>
             </div>
           ) : null}
+
+          <SoundOnAnswer questionStatus={questionStatus} />
+
           {permissionToStartSound && (
             <AudioTimer
               audioTime={audioTime}
@@ -472,6 +486,7 @@ function Quiz({ setIsMusicAllowed, platform }) {
               isAnswered={isAnswered}
             />
           )}
+
           {questionStatus && (
             <Popup bg="bg-transparent">
               <CorrectAnswer />
