@@ -15,6 +15,7 @@ const AudioTimer = ({ onTimeout, audioTime, setAudioTime, isAnswered }) => {
   useEffect(() => {
     if (!isInitialRender) {
       if (audioTime === 0 && !isAnswered) {
+        console.log("fgf")
         onTimeout();
       }
     } else {

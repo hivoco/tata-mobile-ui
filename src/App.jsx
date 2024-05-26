@@ -15,6 +15,8 @@ import Thanks from "./components/Thanks";
 import Login from "./components/Login";
 import { useState } from "react";
 import LeaderBoard from "./components/LeaderBoard";
+import RecorderQuiz from "./components/RecorderQuiz";
+import PlateformWiseQuiz from "./components/PlateformWiseQuiz";
 
 function App() {
   const [isMusicAllowed, setIsMusicAllowed] = useState(false);
@@ -37,8 +39,13 @@ function App() {
         {/* <Route path="/quiz" element={<QuizLoading />} /> */}
         <Route
           path="/quiz/play"
-          element={<Quiz setIsMusicAllowed={setIsMusicAllowed} />}
+          element={<PlateformWiseQuiz setIsMusicAllowed={setIsMusicAllowed} />}
         />
+        {/* <Route
+          path="/quiz/play"
+          element={<RecorderQuiz setIsMusicAllowed={setIsMusicAllowed} />}
+        /> */}
+        {/* <Route path="/" element={<RecorderQuiz />} /> */}
         <Route path="/quiz/play/finish" element={<Thanks />} />
         <Route path="/quiz/get-your-final-score" element={<FinalScore />} />
         <Route path="/login" element={<Login />} />

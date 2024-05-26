@@ -19,7 +19,7 @@ import AudioTimer from "./AudioTimer";
 import useSpeechRecognition from "../utils/useSpeechRecognition";
 import CorrectAnswer from "../components/CorrectAnswer";
 
-function Quiz({ setIsMusicAllowed }) {
+function Quiz({ setIsMusicAllowed, platform }) {
   const {
     recognition,
     speechText,
@@ -74,7 +74,7 @@ function Quiz({ setIsMusicAllowed }) {
   const handleNext = () => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
-  }
+    }
     setIsQuizQuestionLoading(false);
     setSeconds(20);
     setMicOnTime(0);
@@ -89,13 +89,17 @@ function Quiz({ setIsMusicAllowed }) {
     }
   };
 
-  const verifyAnswer = async (user_answer, question_id, onClick,lang) => {
+  const verifyAnswer = async (user_answer, question_id, onClick, lang) => {
     abortControllerRef.current = new AbortController();
     const signal = abortControllerRef.current.signal;
     setIsQuizQuestionLoading(true);
-    const responce = await axios(
-      `/verify_answer?user_answer=${user_answer}&question_id=${question_id}&onClick=${onClick}&lang=${lang}`,{signal}
-    );
+    const responce = await axios.post(`/verify_answer`, {
+      user_answer,
+      question_id,
+      onClick,
+      lang,
+      platform,
+    });
 
     setIsAnswered(false);
     setIsQuizQuestionLoading(false);
@@ -110,7 +114,6 @@ function Quiz({ setIsMusicAllowed }) {
       wrongAnswerSound();
       setQuestionStatus(false);
     }
-    
 
     return responce?.data;
   };
@@ -121,7 +124,7 @@ function Quiz({ setIsMusicAllowed }) {
       audioRef.current.src = null;
     }
 
-    const ans = await verifyAnswer(event, id, true,lang);
+    const ans = await verifyAnswer(event, id, true, lang);
     setIsGivenAnswerCorrect(ans.is_correct);
 
     setCorrectResponceAnswer(ans.correct_answer);
@@ -163,7 +166,7 @@ function Quiz({ setIsMusicAllowed }) {
     if (value) {
       // micOffSound();
 
-      const ans = await verifyAnswer(speechText, question_id, false,lang);
+      const ans = await verifyAnswer(speechText, question_id, false, lang);
       let event = "";
       if (ans.is_correct == "true") {
         if (ans.correct_answer == allQuestions?.[currentIndex]?.options[0]) {
@@ -235,9 +238,6 @@ function Quiz({ setIsMusicAllowed }) {
     );
   };
 
-
- 
-
   return (
     <Layout bg={"/images/ss3.png"}>
       {isLoading ? (
@@ -299,7 +299,6 @@ function Quiz({ setIsMusicAllowed }) {
                     </u>
                   </p>
                 )}
-
               </div>
             </div>
 
@@ -318,7 +317,7 @@ function Quiz({ setIsMusicAllowed }) {
                   correctResponceAnswer
                     ? isGivenAnswerCorrect
                       ? correctResponceAnswer.trim() ==
-                      allQuestions?.[currentIndex]?.options[0].trim()
+                        allQuestions?.[currentIndex]?.options[0].trim()
                         ? "border-[#00AA07]"
                         : "border-[#FA3939]"
                       : "border-[#FA3939]"
@@ -358,7 +357,7 @@ function Quiz({ setIsMusicAllowed }) {
                   correctResponceAnswer
                     ? isGivenAnswerCorrect
                       ? correctResponceAnswer.trim() ==
-                    allQuestions?.[currentIndex]?.options[1].trim()
+                        allQuestions?.[currentIndex]?.options[1].trim()
                         ? "border-[#00AA07] "
                         : "border-[#FA3939]"
                       : "border-[#FA3939]"

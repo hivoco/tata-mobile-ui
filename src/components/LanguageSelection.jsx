@@ -1,17 +1,28 @@
 import { useEffect, useState } from "react";
 import Layout from "../../Layout";
 import { useNavigate } from "react-router-dom";
+
 // import { getUniqueID } from "../api/endpoint";
 import axios from "../api/instance";
+import { getPlatform } from "../utils/helperFunction";
 
 function LanguageSelection() {
+  const [platform, setPlatform] = useState("");
   const navigate = useNavigate();
-  
+
   const getUniqueID = async () => {
     const responce = await axios(`/guest_user?name=&phone=`);
     sessionStorage.setItem("unique_id", responce.data.unique_id);
-    navigate(`/quiz/play?lang=${selectedOption?.toLowerCase()}`);
+    navigate(
+      `/quiz/play?lang=${selectedOption?.toLowerCase()}&platform=${platform}`
+    );
   };
+
+  useEffect(() => {
+    const platformName = getPlatform();
+    setPlatform(platformName);
+  }, []);
+  console.log("pla", platform);
 
   const handleClick = () => {
     getUniqueID();

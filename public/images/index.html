@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ seo_variable.title }}</title>
+    <meta property="og:title" content="{{ seo_variable.title }}">
+    <meta property="og:description" content="{{ seo_variable.description }}">
+    <meta property="og:image" content="{{ seo_variable.image}}">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="../static/styles.css">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link href="https://db.onlinewebfonts.com/c/00d5a78493aed4b11e2584ad7cceee49?family=Gilroy-ExtraBold"
+        rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,500&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body onload="init()">
+    <div
+        class=" relative bg-cover overflow-hidden   bg-black  bg-no-repeat w-screen h-screen bg-center bg-[url('../static/assets/bg-img.png')]">
+        <header class="z-10  relative container px-20 flex h-24 items-center  justify-between ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="280.239" height="51.363" viewBox="0 0 280.239 51.363">
+                <g id="logo-small" transform="translate(0 0.003)">
+                    <g id="Group_351" data-name="Group 351" transform="translate(0 -0.003)">
+                        <g id="Group_350" data-name="Group 350" transform="translate(52.355 17.362)">
+                            <path id="Path_199" data-name="Path 199" d="M318.735,111.72v14.79H316.15V111.72Z"
+                                transform="translate(-316.15 -110.581)" fill="#fff" />
+                            <path id="Path_200" data-name="Path 200"
+                                d="M358.919,131.162c3.921,0,5.827,1.863,5.827,5.061v6.508H362.4v-6.508c0-1.818-1.052-2.827-3.484-2.827h-3.791c-.2,0-.285.109-.285.328v9.005H352.52v-9.772c0-1.358.46-1.8,1.621-1.8h4.776Z"
+                                transform="translate(-346.497 -126.801)" fill="#fff" />
+                            <path id="Path_201" data-name="Path 201"
+                                d="M440.628,117.369V114.63h2.345v2.739h3.2V119.6h-3.2v5.478c0,1.293.46,1.731,1.555,1.731h1.6v2.125h-2.082c-2.388,0-3.418-.964-3.418-3.988V119.6H439.05v-2.236Z"
+                                transform="translate(-418.698 -113.009)" fill="#fff" />
+                            <path id="Path_202" data-name="Path 202"
+                                d="M502.017,131.17c2.739,0,3.9,1.315,3.9,3.549s-1.073,3.33-3.921,3.33h-5.5v.833c0,.921.5,1.6,1.775,1.6h7.078v2.257h-7.078c-2.891,0-4.031-1.621-4.031-3.812v-3.945c0-2.191,1.139-3.812,4.031-3.812Zm-5.521,5.061h5.433c1.249,0,1.709-.525,1.709-1.379s-.5-1.446-1.643-1.446h-3.724c-1.27,0-1.775.7-1.775,1.6v1.227Z"
+                                transform="translate(-464.748 -126.81)" fill="#fff" />
+                            <path id="Path_203" data-name="Path 203"
+                                d="M589.7,131.17v2.236h-4.075a1.3,1.3,0,0,0-1.49,1.49v7.844H581.81v-8.194c0-2.323.854-3.375,3.133-3.375H589.7Z"
+                                transform="translate(-537.817 -126.81)" fill="#fff" />
+                            <path id="Path_204" data-name="Path 204"
+                                d="M649.387,131.162c2.891,0,4.031,1.621,4.031,3.812v5.433c0,1.664-.439,2.322-2.388,2.322h-5.412c-2.739,0-3.878-1.336-3.878-3.527s1.052-3.33,3.9-3.33h5.5V135c0-.9-.5-1.6-1.775-1.6h-6.924V131.16h6.945Zm1.754,8.721v-2.169h-5.457c-1.227,0-1.666.5-1.666,1.358s.46,1.4,1.621,1.4H650.5c.46,0,.636-.176.636-.591Z"
+                                transform="translate(-587.822 -126.801)" fill="#fff" />
+                            <path id="Path_205" data-name="Path 205"
+                                d="M739.778,131.17v2.236h-5.74c-2.015,0-2.891,1.052-2.891,3.549s.876,3.527,2.891,3.527h5.74v2.257h-5.96c-3.09,0-5.018-1.885-5.018-5.784s1.928-5.784,5.018-5.784Z"
+                                transform="translate(-660.465 -126.81)" fill="#fff" />
+                            <path id="Path_206" data-name="Path 206"
+                                d="M806.318,117.369V114.63h2.345v2.739h3.2V119.6h-3.2v5.478c0,1.293.46,1.731,1.555,1.731h1.6v2.125h-2.082c-2.388,0-3.418-.964-3.418-3.988V119.6H804.74v-2.236Z"
+                                transform="translate(-723.829 -113.009)" fill="#fff" />
+                            <path id="Path_207" data-name="Path 207"
+                                d="M863.715,104.84v2.694H861.37V104.84Zm-.022,4.36v11.569h-2.322V109.2Z"
+                                transform="translate(-771.081 -104.84)" fill="#fff" />
+                            <path id="Path_208" data-name="Path 208"
+                                d="M890.424,131.17l3.857,9.29a.54.54,0,0,0,.57.351.6.6,0,0,0,.614-.351l4.009-9.29h2.5l-4.47,10.32A2.527,2.527,0,0,1,894.851,143a2.5,2.5,0,0,1-2.63-1.512l-4.251-10.32Z"
+                                transform="translate(-793.276 -126.81)" fill="#fff" />
+                            <path id="Path_209" data-name="Path 209"
+                                d="M987.568,131.17c2.739,0,3.9,1.315,3.9,3.549s-1.073,3.33-3.921,3.33h-5.5v.833c0,.921.5,1.6,1.775,1.6H990.9v2.257h-7.078c-2.891,0-4.032-1.621-4.032-3.812v-3.945c0-2.191,1.139-3.812,4.032-3.812Zm-5.521,5.061h5.433c1.249,0,1.709-.525,1.709-1.379s-.5-1.446-1.643-1.446h-3.724c-1.27,0-1.775.7-1.775,1.6v1.227Z"
+                                transform="translate(-869.891 -126.81)" fill="#fff" />
+                            <path id="Path_210" data-name="Path 210"
+                                d="M1074.742,111.72c4.317,0,6.661,2.409,6.661,7.406s-2.322,7.384-6.661,7.384h-5.215a1.066,1.066,0,0,1-1.227-1.206V112.926a1.066,1.066,0,0,1,1.227-1.206Zm-3.857,11.941c0,.2.088.263.285.263h3.572c2.87,0,4.075-1.424,4.075-4.821s-1.206-4.8-4.075-4.8h-3.572c-.2,0-.285.066-.285.263Z"
+                                transform="translate(-943.744 -110.581)" fill="#fff" />
+                            <path id="Path_211" data-name="Path 211"
+                                d="M1171.338,131.17c2.739,0,3.9,1.315,3.9,3.549s-1.073,3.33-3.921,3.33h-5.5v.833c0,.921.5,1.6,1.775,1.6h7.078v2.257h-7.078c-2.891,0-4.032-1.621-4.032-3.812v-3.945c0-2.191,1.139-3.812,4.032-3.812Zm-5.521,5.061h5.433c1.249,0,1.709-.525,1.709-1.379s-.5-1.446-1.643-1.446h-3.724c-1.27,0-1.775.7-1.775,1.6v1.227Z"
+                                transform="translate(-1023.229 -126.81)" fill="#fff" />
+                            <path id="Path_212" data-name="Path 212"
+                                d="M1264.79,131.162c3.921,0,5.851,1.863,5.851,5.061v6.508H1268.3v-6.508c0-1.818-1.052-2.827-3.484-2.827h-2.718v9.333h-2.345V133.4h-5.872c-.2,0-.285.109-.285.328v9.005h-2.322v-9.772c0-1.358.46-1.8,1.621-1.8h11.9Z"
+                                transform="translate(-1096.414 -126.801)" fill="#fff" />
+                            <path id="Path_213" data-name="Path 213"
+                                d="M1391.96,131.17c3.067,0,5.018,1.885,5.018,5.784s-1.951,5.784-5.018,5.784h-2.433c-3.09,0-5.018-1.885-5.018-5.784s1.928-5.784,5.018-5.784Zm-2.214,2.236c-2.015,0-2.891,1.052-2.891,3.549s.876,3.527,2.891,3.527h1.994c1.994,0,2.891-1.03,2.891-3.527s-.9-3.549-2.891-3.549Z"
+                                transform="translate(-1207.589 -126.81)" fill="#fff" />
+                            <path id="Path_214" data-name="Path 214"
+                                d="M1483.478,131.162V133.4h-6.4c-1.073,0-1.512.439-1.512,1.315,0,.811.351,1.249,1.643,1.249h2.718c3.2,0,4.009,1.469,4.009,3.264,0,2.06-1.073,3.506-3.791,3.506h-6.727v-2.257h6.727c1.073,0,1.512-.373,1.512-1.27s-.482-1.293-1.643-1.293h-2.739c-3.2,0-3.988-1.6-3.988-3.375,0-2.082,1.073-3.375,3.769-3.375h6.42Z"
+                                transform="translate(-1281.667 -126.801)" fill="#fff" />
+                            <path id="Path_215" data-name="Path 215" d="M1555.037,183.04v2.979h-2.5V183.04Z"
+                                transform="translate(-1347.794 -170.09)" fill="#fff" />
+                            <path id="Path_216" data-name="Path 216"
+                                d="M1588.485,104.84v2.694h-2.345V104.84Zm-.021,4.36v11.569h-2.322V109.2Z"
+                                transform="translate(-1375.829 -104.84)" fill="#fff" />
+                            <path id="Path_217" data-name="Path 217"
+                                d="M1624.42,131.17c3.067,0,5.018,1.885,5.018,5.784s-1.951,5.784-5.018,5.784h-2.433c-3.09,0-5.018-1.885-5.018-5.784s1.927-5.784,5.018-5.784Zm-2.214,2.236c-2.015,0-2.891,1.052-2.891,3.549s.876,3.527,2.891,3.527h1.994c1.994,0,2.891-1.03,2.891-3.527s-.9-3.549-2.891-3.549Z"
+                                transform="translate(-1401.554 -126.81)" fill="#fff" />
+                        </g>
+                        <path id="Path_218" data-name="Path 218"
+                            d="M36.26,4.439a6.777,6.777,0,0,0-2.35-1.285L31.494,1.682A11.428,11.428,0,0,0,25.446,0a16.122,16.122,0,0,0-2.358.2,9.865,9.865,0,0,0-3.3,1.148L.166,12.416l0,0a.344.344,0,0,0-.169.3v6.49l4.927,2.674v11.15l-4.918,2.8L0,35.83v6.523L15.586,51.36l6.256-3.491A35.125,35.125,0,0,0,34.882,35.237c3.264-5.457,5.558-11.522,5.981-15.858.727-7.43-.4-11.387-4.6-14.94ZM4.927,38.385l-3.895-2.02,3.895-2.216Zm-3.618-25.5L20.26,2.187a8.861,8.861,0,0,1,2.977-1.035A15.386,15.386,0,0,1,25.454.966,10.468,10.468,0,0,1,30.99,2.51l.4.242a16.211,16.211,0,0,0-6.271,1.283L10.534,12.35l-.035.02-.96.548,1.177.667,9.151,5.423v5.341l-4.281,2.573V21.3Zm15.138,2.973,8.59-4.875a9.78,9.78,0,0,1,3.642-.768c.694,1.091,1.913,3.734,1.288,8.212A28.859,28.859,0,0,1,22.821,33.1a37.467,37.467,0,0,1-6.75,5.357v-10.7L20.836,24.9v-6.44ZM31.818,30.2c-.325.649-.677,1.277-1.047,1.875a26.8,26.8,0,0,1-9.06,8.906l-6.126,3.675L10.7,41.87,10.862,25.4,15.1,27.832v12.35l.734-.434a40.256,40.256,0,0,0,7.7-5.99,29.854,29.854,0,0,0,7.392-15.2,13.535,13.535,0,0,0-1.07-8.24,4.959,4.959,0,0,1,3.012,1.631c4.281,4.764,1.535,13.084-1.05,18.252Z"
+                            transform="translate(0 0.003)" fill="#fff" />
+                    </g>
+                </g>
+            </svg>
+
+            <nav class="flex items-center gap-[29px] text-white text-sm font-medium font-poppins">
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Contact Us</a>
+            </nav>
+        </header>
+
+        <section class="content  h-60   flex justify-center items-center ">
+            <!-- <h2  id="answer" class=" text-3xl text-[#FFFAF9] font-Orbitron font-semibold ">
+                Hi, I am Leo! How may I help you today?
+            </h2> -->
+            <div class="video-parent  z-0 w-screen h-screen">
+                <video class=" min-w-full min-h-full fixed top-0 left-0 " id="video" autoplay loop>
+            </div>
+
+            </video>
+        </section>
+
+        
+        <PlayVideo base64Video={responsePresent?.video} /> 
+        <div class="absolute bottom-0 w-full pb-2">
+            <div
+                class="flex items-center justify-center gap-8 mt-8 bg-black bg-opacity-[0.37]  bg-no-repeat bg-clip-padding border-y border-[#707070]  border-opacity-35  py-[2.625rem]">
+                <input
+                    class=" font-Orbitron w-2/4 py-4  bg-[#eceeff rounded-[5px] opacity-100 text-[15px] leading-5  border-none outline-none font-normal font-questrial text-black text-center placeholder-black tracking-normal"
+                    type="text" id="input" onKeyDown={checkKeyPress} value="" placeholder="Type your Question here"
+                    value="transcript" >
+
+                <button
+                    onclick="sendDefaultStatement()"
+                    class="cursor-pointer border-none outline-none font-Orbitron bg-gradient-to-b from-[#A90000] to-[#FF9200] bg-transparent bg-center bg-no-repeat bg-clip-padding flex items-center gap-[6px] rounded px-16 py-4  font-medium text-sm text-stone-50 font-questrial disabled:cursor-not-allowed"
+                    id="lets-talk-button" type="button">
+                    <img class="w-4 " src="../static/assets/mic-button.png" alt="mic image" />
+                    <span class="text-center text-base leading-5 ">
+                        Let's Talk
+                    </span>
+                </button>
+                <button 
+                id="restart-btn"
+                onclick="reset()"
+                disabled
+                class="text-[#FFFAF9] text-center font-Orbitron text-[15px] leading-[18px] font-normal disabled:cursor-not-allowed	">
+                    Restart
+                </button>
+            </div>
+
+
+            <footer
+                class="px-20 flex items-center justify-between font-normal font-Rubik text-[#ADADAD]  text-[15px] leading-[18px] pt-[0.75rem]">
+                <span>2024 QuerEase.Ai © All rights reserved.</span>
+                <div class="flex  gap-3">
+                    <a href="#">Privacy Policy </a>
+                    |
+                    <a href="#">Terms & Conditions</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+<script src="../static/app.js"></script>
+
+</html>
