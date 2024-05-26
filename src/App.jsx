@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../Layout";
 import { BrowserRouter } from "react-router-dom";
 import SplashScreen1 from "./components/SplashScreen1";
@@ -17,6 +17,7 @@ import { useState } from "react";
 import LeaderBoard from "./components/LeaderBoard";
 import RecorderQuiz from "./components/RecorderQuiz";
 import PlateformWiseQuiz from "./components/PlateformWiseQuiz";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const [isMusicAllowed, setIsMusicAllowed] = useState(false);
@@ -32,24 +33,29 @@ function App() {
         <Route
           path="/"
           element={<Home setIsMusicAllowed={setIsMusicAllowed} />}
-          // element={<Quiz setIsMusicAllowed={setIsMusicAllowed} />}
         />
-
         <Route path="/select-language" element={<LanguageSelection />} />
-        {/* <Route path="/quiz" element={<QuizLoading />} /> */}
-        <Route
-          path="/quiz/play"
-          element={<PlateformWiseQuiz setIsMusicAllowed={setIsMusicAllowed} />}
-        />
-        {/* <Route
-          path="/quiz/play"
-          element={<RecorderQuiz setIsMusicAllowed={setIsMusicAllowed} />}
-        /> */}
-        {/* <Route path="/" element={<RecorderQuiz />} /> */}
-        <Route path="/quiz/play/finish" element={<Thanks />} />
-        <Route path="/quiz/get-your-final-score" element={<FinalScore />} />
+
         <Route path="/login" element={<Login />} />
-        <Route path="/result/access-your-leader" element={<LeaderBoard />} />
+
+        <Route path="/quiz/play" element={<ProtectedRoute />}>
+          <Route
+            path=""
+            element={
+              <PlateformWiseQuiz setIsMusicAllowed={setIsMusicAllowed} />
+            }
+          />
+        </Route>
+        <Route path="/quiz/play/finish" element={<ProtectedRoute />}>
+          <Route path="" element={<Thanks />} />
+        </Route>
+        <Route path="/quiz/get-your-final-score" element={<ProtectedRoute />}>
+          <Route path="" element={<FinalScore />} />
+        </Route>
+        <Route path="/result/access-your-leader" element={<ProtectedRoute />}>
+          <Route path="" element={<LeaderBoard />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
