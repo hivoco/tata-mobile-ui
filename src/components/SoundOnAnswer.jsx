@@ -1,12 +1,13 @@
 import { useEffect, useRef } from "react";
 
-function SoundOnAnswer({ questionStatus }) {
+function SoundOnAnswer({ questionStatus, setQuestionStatus }) {
   const soundRef = useRef();
 
   useEffect(() => {
     if (questionStatus !== "") {
       soundRef.current.play();
-    } else {
+    } 
+    else {
       soundRef.current.pause();
     }
   }, [questionStatus]);
@@ -14,11 +15,12 @@ function SoundOnAnswer({ questionStatus }) {
   return (
     <audio
       ref={soundRef}
+      onEnded={() => setQuestionStatus("")}
       src={
         questionStatus !== ""
           ? questionStatus
             ? "/sounds/right_ans_tone.mp3"
-            : "/sounds/wrong_ans_sound.wav"
+            : "/sounds/wrong_ans_sound.mp3"
           : ""
       }
     ></audio>

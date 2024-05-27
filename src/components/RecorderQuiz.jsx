@@ -124,15 +124,15 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
     if (responce?.data?.is_correct == "true") {
       // rightAnswerSound();
       setQuestionStatus(true);
-      setTimeout(() => {
-        setQuestionStatus("");
-      }, 2000);
+      // setTimeout(() => {
+      //   setQuestionStatus("");
+      // }, 2000);
     } else {
       // wrongAnswerSound();
       setQuestionStatus(false);
-      setTimeout(() => {
-        setQuestionStatus("");
-      }, 1000);
+      // setTimeout(() => {
+      //   setQuestionStatus("");
+      // }, 1000);
     }
 
     return responce?.data;
@@ -427,7 +427,10 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
 
               {currentIndex === 9 ? (
                 <button
-                  onClick={() => viewScore()}
+                  onClick={() => {
+                    viewScore();
+                    setQuestionStatus("");
+                  }}
                   disabled={selectedOption.trim() != "" ? false : true}
                   className={`${
                     selectedOption.trim() !== ""
@@ -439,7 +442,10 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
                 </button>
               ) : (
                 <button
-                  onClick={() => handleNext()}
+                  onClick={() => {
+                    handleNext();
+                    setQuestionStatus("");
+                  }}
                   disabled={selectedOption.trim() !== "" ? false : true}
                   className={`${
                     selectedOption.trim() !== ""
@@ -486,7 +492,10 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
             </div>
           ) : null}
 
-          <SoundOnAnswer questionStatus={questionStatus} />
+          <SoundOnAnswer
+            questionStatus={questionStatus}
+            setQuestionStatus={setQuestionStatus}
+          />
 
           {permissionToStartSound && (
             <AudioTimer

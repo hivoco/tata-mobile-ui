@@ -72,11 +72,9 @@ function Quiz({ setIsMusicAllowed, platform }) {
   }, []);
 
   const handleNext = () => {
-
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
-
     abortControllerRef.current = null;
     setIsQuizQuestionLoading(false);
     setSeconds(20);
@@ -118,14 +116,14 @@ function Quiz({ setIsMusicAllowed, platform }) {
     if (responce?.data?.is_correct == "true") {
       // rightAnswerSound();
       setQuestionStatus(true);
-      setTimeout(() => {
-        setQuestionStatus("");
-      }, 2000);
+      // setTimeout(() => {
+      //   setQuestionStatus("");
+      // }, 2000);
     } else {
       setQuestionStatus(false);
-      setTimeout(() => {
-        setQuestionStatus("");
-      }, 1000);
+      // setTimeout(() => {
+      //   setQuestionStatus("");
+      // }, 1000);
     }
 
     return responce?.data;
@@ -306,7 +304,6 @@ function Quiz({ setIsMusicAllowed, platform }) {
                     src={isAnswered ? "/svgs/wave.svg" : "/svgs/mic.svg"}
                     alt="mic-btn"
                   />
-
                 </div>
 
                 {speechText && (
@@ -417,9 +414,27 @@ function Quiz({ setIsMusicAllowed, platform }) {
                 Skip
               </button>
 
+              {/* <button
+                onClick={() => {
+                  {currentIndex === 9 ? viewScore() : handleNext()}
+                  setQuestionStatus("");
+                }}
+                disabled={selectedOption.trim() != "" ? false : true}
+                className={`${
+                  selectedOption.trim() !== ""
+                    ? "purple-btn  shadow-[2.56px_3.85px_0px_0px_black]"
+                    : "bg-[#B8B8B8]"
+                }    rounded-[6.4px]  py-[13px] w-1/2  font-Inter text-[11px] font-semibold leading-[13.3px] text-center text-white`}
+              >
+                {currentIndex === 9 ? "Finish" : "Confirm"}
+              </button> */}
+
               {currentIndex === 9 ? (
                 <button
-                  onClick={() => viewScore()}
+                  onClick={() => {
+                    viewScore();
+                    setQuestionStatus("");
+                  }}
                   disabled={selectedOption.trim() != "" ? false : true}
                   className={`${
                     selectedOption.trim() !== ""
@@ -431,7 +446,10 @@ function Quiz({ setIsMusicAllowed, platform }) {
                 </button>
               ) : (
                 <button
-                  onClick={() => handleNext()}
+                  onClick={() => {
+                    setQuestionStatus("");
+                    handleNext();
+                  }}
                   disabled={selectedOption.trim() !== "" ? false : true}
                   className={`${
                     selectedOption.trim() !== ""
@@ -477,7 +495,10 @@ function Quiz({ setIsMusicAllowed, platform }) {
             </div>
           ) : null}
 
-          <SoundOnAnswer questionStatus={questionStatus} />
+          <SoundOnAnswer
+            questionStatus={questionStatus}
+            setQuestionStatus={setQuestionStatus}
+          />
 
           {permissionToStartSound && (
             <AudioTimer
