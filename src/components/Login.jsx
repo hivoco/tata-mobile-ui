@@ -26,23 +26,23 @@ function Login() {
   return (
     <Layout bg={"/images/ss3.png"}>
       <div className=" flex flex-col px-6  items-center  bg-no-repeat     overflow-x-hidden">
-        <div className="flex flex-col items-center ">
+        <div className="w-full flex flex-col items-center  ">
           <div className="h-40 w-auto">
             <img src="/svgs/Its-Game-time.svg" alt="its game time" />
           </div>
 
-          <div className="flex flex-col gap-[18px] w-5/6  ">
+          <div className=" flex flex-col gap-[18px]   ">
 
             <div className="modal-css  p-6 rounded-[10px]  flex flex-col gap-[18px]">
               <div className=" flex flex-col gap-5">
                 <div className="flex flex-col gap-[30px]">
-                  <div className=" flex  flex-col gap-1  items-center">
+                  <div className=" flex  flex-col gap-1  ">
                     <h2 className=" font-DarkerGrotesque text-[40px] font-bold leading-[54px] text-left text-[#252042]">
                       Enter Details
                     </h2>
 
-                    <p className="  text-base leading-[19.36px] text-left text-[#252042] font-Inter font-normal">
-                      Just a few details and you're good to go...{" "}
+                    <p className="  text-[10px] leading-[12.1px] text-left text-[#252042] font-Inter font-normal">
+                      Just a few details and you're good to go...
                     </p>
                   </div>
 

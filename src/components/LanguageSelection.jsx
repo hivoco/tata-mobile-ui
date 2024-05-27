@@ -22,7 +22,6 @@ function LanguageSelection() {
     const platformName = getPlatform();
     setPlatform(platformName);
   }, []);
-  console.log("pla", platform);
 
   const handleClick = () => {
     getUniqueID();

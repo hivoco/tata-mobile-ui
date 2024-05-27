@@ -307,7 +307,7 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
               <div
                 className={`flex flex-col  gap-2 justify-center items-center `}
               >
-                <div className={` ${isRecording && "animate-scale"}`}>
+                <div className={` ${isRecording && "animate-scale"} gap-2`}>
                   <img
                     style={{
                       opacity: selectedOption.trim() != "" ? 0.5 : 1,
@@ -319,6 +319,10 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
                     src={isRecording ? "/svgs/wave.svg" : "/svgs/mic.svg"}
                     alt="mic-btn"
                   />
+
+                  <p className="text-[10.21px] font-semibold leading-[12.35px] text-center">
+                    Tap the mic to speak
+                  </p>
                 </div>
               </div>
             </div>

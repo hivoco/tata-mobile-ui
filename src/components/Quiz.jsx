@@ -291,7 +291,7 @@ function Quiz({ setIsMusicAllowed, platform }) {
               <div
                 className={`flex flex-col  gap-2 justify-center items-center `}
               >
-                <div className={` ${isAnswered && "animate-scale"}`}>
+                <div className={` ${isAnswered && "animate-scale"} `}>
                   <img
                     className="h-[122px]"
                     ref={imageRef}
@@ -306,6 +306,7 @@ function Quiz({ setIsMusicAllowed, platform }) {
                     src={isAnswered ? "/svgs/wave.svg" : "/svgs/mic.svg"}
                     alt="mic-btn"
                   />
+
                 </div>
 
                 {speechText && (

@@ -11,7 +11,7 @@ function LeaderBoard() {
 
   return (
     <Layout bg={"/images/ss1.png"}>
-      <div className="w-5/6   flex  flex-col justify-center gap-[22px] my-0 mx-auto">
+      <div className="w-[86%]   flex  flex-col justify-center gap-[22px] my-0 mx-auto mb-10">
         <div className="flex flex-col  gap-[10px] justify-center  items-center text-white mt-[21px] ">
           <h2 className="text-[38px] font-DarkerGrotesque leading-[14px] text-center">
             LEADERBOARD

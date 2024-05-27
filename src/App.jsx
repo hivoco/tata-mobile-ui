@@ -22,7 +22,6 @@ import ProtectedRoute from "./ProtectedRoute";
 function App() {
   const [isMusicAllowed, setIsMusicAllowed] = useState(false);
   const handleVisibilityChange = () => {
-    console.log("object");
     setIsMusicAllowed(!document.hidden);
   };
   useEffect(() => {
