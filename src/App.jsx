@@ -13,7 +13,7 @@ import BackgroundMusic from "../src/utils/BackroundMusic";
 import FinalScore from "./components/FinalScore";
 import Thanks from "./components/Thanks";
 import Login from "./components/Login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LeaderBoard from "./components/LeaderBoard";
 import RecorderQuiz from "./components/RecorderQuiz";
 import PlateformWiseQuiz from "./components/PlateformWiseQuiz";
@@ -21,6 +21,18 @@ import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const [isMusicAllowed, setIsMusicAllowed] = useState(false);
+  const handleVisibilityChange = () => {
+    console.log("object");
+    setIsMusicAllowed(!document.hidden);
+  };
+  useEffect(() => {
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Cleanup the event listener
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
   return (
     <BrowserRouter>
       {isMusicAllowed && (
