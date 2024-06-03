@@ -8,6 +8,7 @@ import {
   debounce,
   micOffSound,
   micOnSound,
+  openAI_STT,
 } from "../utils/helperFunction";
 import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import Timer from "./Timer";
@@ -39,7 +40,7 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
   const [allQuestions, setAllQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
-  const [seconds, setSeconds] = useState(20);
+  const [seconds, setSeconds] = useState(100);
   const abortControllerRef = useRef(null);
 
   const [isGivenAnswerCorrect, setIsGivenAnswerCorrect] = useState(false);
@@ -69,7 +70,8 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
     setIsLoading(false);
     setOpenSoundPopup(true);
   }, 200);
-  const handleOptionChange = async (event, id) => {
+
+  const handleOptionChange = async (event, id) => {// event is option here
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -79,8 +81,16 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
     }
 
     setSelectedOption(event);
-    const ans = await verifyAnswer(event, id, true, lang);
-    setIsGivenAnswerCorrect(ans.is_correct);
+    const ans = await verifyAnswer(
+      event,
+      id,
+      true,
+      lang,
+      allQuestions?.[currentIndex]?.options[0],
+      allQuestions?.[currentIndex]?.options[1]
+    );
+
+    setIsGivenAnswerCorrect(ans?.is_correct);
 
     setCorrectResponceAnswer(ans.correct_answer);
 
@@ -100,7 +110,23 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
     });
   };
 
-  const verifyAnswer = async (user_answer, question_id, onClick, lang) => {
+  const [replyAudio, setReplyAudio] = useState("");
+  const [correctOption, setCorrectOption] = useState("");
+
+  const verifyAnswer = async (
+    user_answer,
+    question_id,
+    onClick,
+    lang,
+    option_one,
+    option_two
+  ) => {
+    if (!onClick) {
+      // console.log('audio sent to openAi, will return text');
+      user_answer = await openAI_STT(user_answer);
+      // console.log('stt response' , user_answer);
+    }
+
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -108,6 +134,7 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
 
     const signal = abortControllerRef.current.signal;
     setIsQuizQuestionLoading(true);
+    setCorrectOption('')
     const responce = await axios.post(
       `/verify_answer`,
       {
@@ -115,6 +142,8 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
         question_id,
         onClick,
         lang,
+        option_one,
+        option_two,
         platform,
       },
       { signal }
@@ -124,17 +153,13 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
     if (responce?.data?.is_correct == "true") {
       // rightAnswerSound();
       setQuestionStatus(true);
-      // setTimeout(() => {
-      //   setQuestionStatus("");
-      // }, 2000);
     } else {
       // wrongAnswerSound();
       setQuestionStatus(false);
-      // setTimeout(() => {
-      //   setQuestionStatus("");
-      // }, 1000);
     }
 
+    setReplyAudio(responce?.data?.response_text);
+    setCorrectOption(responce?.data?.correct_option);
     return responce?.data;
   };
 
@@ -142,6 +167,7 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
     if (audioRef.current) {
       audioRef.current.src = null;
     }
+
     if (isRecording) {
       stopRecording();
     } else {
@@ -154,78 +180,79 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
       abortControllerRef.current.abort();
     }
     stopRecording();
+    setCorrectOption('')
     setSelectedOption("");
     setIsQuizQuestionLoading(false);
     setIsGivenAnswerCorrect(false);
     setCorrectResponceAnswer("");
-    setSeconds(20);
+    setSeconds(100);
     setCurrentIndex((prevIndex) => (prevIndex > 8 ? 9 : prevIndex + 1));
     if (currentIndex < 9) {
       setAudioTime(allQuestions?.[currentIndex + 1]?.audio_time);
     }
   };
+
   const audioTimerFunction = () => {
     if (audioRef.current) {
       audioRef.current.src = null;
     }
-    // if (selectedOption == "") {
-    //   startRecording();
-    // }
   };
 
   const handleRecordingComplete = async () => {
-    let base64_audio = null;
     if (recordingBlob) {
-      blobToBase64(recordingBlob)
-        .then((res) => {
-          verifyAnswer(
-            res,
-            allQuestions?.[currentIndex]?.question_id,
-            false,
-            lang
-          )
-            .then((ans) => {
-              let event = "";
-              if (ans.is_correct == "true") {
-                if (
-                  ans.correct_answer == allQuestions?.[currentIndex]?.options[0]
-                ) {
-                  setSelectedOption(allQuestions?.[currentIndex]?.options[0]);
-                  event = allQuestions?.[currentIndex]?.options[0];
-                } else {
-                  setSelectedOption(allQuestions?.[currentIndex]?.options[1]);
-                  event = allQuestions?.[currentIndex]?.options[1];
-                }
-              } else {
-                if (
-                  ans.correct_answer == allQuestions?.[currentIndex]?.options[0]
-                ) {
-                  setSelectedOption(allQuestions?.[currentIndex]?.options[1]);
-                  event = allQuestions?.[currentIndex]?.options[1];
-                } else {
-                  setSelectedOption(allQuestions?.[currentIndex]?.options[0]);
-                  event = allQuestions?.[currentIndex]?.options[1];
-                }
-              }
+      verifyAnswer(
+        recordingBlob,
+        allQuestions?.[currentIndex]?.question_id,
+        false,
+        lang,
+        allQuestions?.[currentIndex]?.options[0],
+        allQuestions?.[currentIndex]?.options[1]
+      )
+        .then((ans) => {
+          console.log(ans);
+          let event = "";
+          // console.log(typeof ans.is_correct, ans.is_correct);
 
-              setIsGivenAnswerCorrect(ans.is_correct);
-              setCorrectResponceAnswer(ans.correct_answer);
-              setUserResponceArray({
-                ...userResponceArray,
-                quiz: [
-                  ...userResponceArray.quiz,
+          if (ans.is_correct === true) {
+            if (
+              ans.correct_answer === allQuestions?.[currentIndex]?.options[0]
+            ) {
+              setSelectedOption(allQuestions?.[currentIndex]?.options[0]);
+              event = allQuestions?.[currentIndex]?.options[0];
+            } else {
+              setSelectedOption(allQuestions?.[currentIndex]?.options[1]);
+              event = allQuestions?.[currentIndex]?.options[1];
+            }
+          } 
 
-                  {
-                    question: allQuestions?.[currentIndex]?.question,
-                    givenAns: event,
-                    correctAns: ans.correct_answer,
-                    isCorrect: ans.is_correct,
-                    time: 20 - Number(seconds),
-                  },
-                ],
-              });
-            })
-            .catch((err) => console.log(err));
+          else {
+            if (
+              ans.correct_answer === allQuestions?.[currentIndex]?.options[0]
+            ) {
+              setSelectedOption(allQuestions?.[currentIndex]?.options[1]);
+              event = allQuestions?.[currentIndex]?.options[1];
+            } else {
+              setSelectedOption(allQuestions?.[currentIndex]?.options[0]);
+              event = allQuestions?.[currentIndex]?.options[0];
+            }
+          }
+
+          setIsGivenAnswerCorrect(ans?.is_correct);
+          setCorrectResponceAnswer(ans.correct_answer);
+          setUserResponceArray({
+            ...userResponceArray,
+            quiz: [
+              ...userResponceArray.quiz,
+
+              {
+                question: allQuestions?.[currentIndex]?.question,
+                givenAns: event,
+                correctAns: ans.correct_answer,
+                isCorrect: ans.is_correct,
+                time: 20 - Number(seconds),
+              },
+            ],
+          });
         })
         .catch((err) => console.log(err));
     }
@@ -338,36 +365,31 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
                 style={{
                   pointerEvents: selectedOption != "" ? "none" : "auto",
                 }}
-                className={`  ${
-                  correctResponceAnswer
-                    ? isGivenAnswerCorrect
-                      ? correctResponceAnswer.trim() ==
-                        allQuestions?.[currentIndex]?.options[0].trim()
-                        ? "border-[#00AA07]"
-                        : "border-[#FA3939]"
-                      : "border-[#FA3939]"
-                    : "border-[#ADD1FF] "
-                }  py-[11px] px-[10.21px]  flex justify-between rounded-[7.66px] border-[1.28px]`}
+                className={`${
+                  correctOption==="option_one"?"border-[#00AA07]":(correctOption==="option_two"?"border-[#FA3939]": "border-[#ADD1FF]")
+                } 
+                py-[11px] px-[10.21px]  flex justify-between rounded-[7.66px] border-[1.28px]`}
                 // className="flex justify-between items-center rounded-[7.7px] px-[10.5px] border border-[#ADD1FF]"
               >
-                <label
-                  className="font-Inter text-[12.76px] font-medium leading-[15.44px] text-left "
-                  htmlFor="option2"
-                >
+                <label className="font-Inter text-[12.76px] font-medium leading-[15.44px] text-left w-full flex justify-between">
                   {allQuestions
                     ? allQuestions?.[currentIndex]?.options[0]
                     : "option 1"}
+
+                  <input
+                    className={`border-[0.64px] border-solid  border-[#00000080] bg-[#F5F5F5] w-[14.04px]`}
+                    type="radio"
+                    value={allQuestions?.[currentIndex]?.options[0]}
+                    checked={
+                      // correctOption==='option_one'
+                      selectedOption ===
+                      allQuestions?.[currentIndex]?.options[0]
+                    }
+                    name="options"
+                  />
                 </label>
-                <input
-                  className={`border-[0.64px] border-solid  border-[#00000080] bg-[#F5F5F5] w-[14.04px]`}
-                  type="radio"
-                  value={allQuestions?.[currentIndex]?.options[0]}
-                  checked={
-                    selectedOption === allQuestions?.[currentIndex]?.options[0]
-                  }
-                  name="options"
-                />
               </div>
+
               <div
                 onClick={() => {
                   handleOptionChange(
@@ -379,35 +401,25 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
                   pointerEvents: selectedOption != "" ? "none" : "auto",
                 }}
                 className={` ${
-                  correctResponceAnswer
-                    ? isGivenAnswerCorrect
-                      ? correctResponceAnswer.trim() ==
-                        allQuestions?.[currentIndex]?.options[1].trim()
-                        ? "border-[#00AA07] "
-                        : "border-[#FA3939]"
-                      : "border-[#FA3939]"
-                    : "border-[#ADD1FF]"
+                  correctOption==="option_two"?"border-[#00AA07]":(correctOption==="option_one"?"border-[#FA3939]": "border-[#ADD1FF]")
                 } py-[11px] px-[10.21px]  flex justify-between rounded-[7.66px] border-[1.28px] `}
-                // className="flex justify-between items-center rounded-[7.7px] px-[10.5px] border border-[#ADD1FF]"
               >
-                <label
-                  className="font-Inter text-[12.76px] font-medium leading-[15.44px] text-left "
-                  htmlFor="option3"
-                >
+                <label className="font-Inter text-[12.76px] font-medium leading-[15.44px] text-left w-full flex justify-between">
                   {allQuestions
                     ? allQuestions?.[currentIndex]?.options[1]
                     : "option 2"}
+                  <input
+                    className={`border-[0.64px] border-solid  border-[#00000080] bg-[#F5F5F5] w-[14.04px]`}
+                    type="radio"
+                    value={allQuestions?.[currentIndex]?.options[1]}
+                    checked={
+                      selectedOption ===
+                      allQuestions?.[currentIndex]?.options[1]
+                    }
+                    name="options"
+                    readOnly={true}
+                  />
                 </label>
-                <input
-                  className={`border-[0.64px] border-solid  border-[#00000080] bg-[#F5F5F5] w-[14.04px]`}
-                  type="radio"
-                  value={allQuestions?.[currentIndex]?.options[1]}
-                  checked={
-                    selectedOption === allQuestions?.[currentIndex]?.options[1]
-                  }
-                  name="options"
-                  readOnly={true}
-                />
               </div>
             </div>
 
@@ -494,7 +506,9 @@ function RecorderQuiz({ setIsMusicAllowed, platform }) {
 
           <SoundOnAnswer
             questionStatus={questionStatus}
+            replyAudio={replyAudio}
             setQuestionStatus={setQuestionStatus}
+            setReplyAudio={setReplyAudio}
           />
 
           {permissionToStartSound && (

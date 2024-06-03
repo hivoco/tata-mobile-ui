@@ -41,10 +41,14 @@ function Quiz({ setIsMusicAllowed, platform }) {
   const [isQuizQuestionLoading, setIsQuizQuestionLoading] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [seconds, setSeconds] = useState(20);
+
+  const [seconds, setSeconds] = useState(100);
+
   const [permissionToStartSound, setPermissionToStartSound] = useState(false);
   const [openSoundPopup, setOpenSoundPopup] = useState(true);
+
   const [audioTime, setAudioTime] = useState(20);
+
   const [micOnTime, setMicOnTime] = useState(0);
   const [questionStatus, setQuestionStatus] = useState("");
 
@@ -75,9 +79,11 @@ function Quiz({ setIsMusicAllowed, platform }) {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
+
     abortControllerRef.current = null;
+    setCorrectOption("");
     setIsQuizQuestionLoading(false);
-    setSeconds(20);
+    setSeconds(100);
     setMicOnTime(0);
     setSpeechText("");
     setSelectedOption("");
@@ -90,7 +96,16 @@ function Quiz({ setIsMusicAllowed, platform }) {
     }
   };
 
-  const verifyAnswer = async (user_answer, question_id, onClick, lang) => {
+  const [replyAudio, setReplyAudio] = useState("");
+  const [correctOption, setCorrectOption] = useState("");
+  const verifyAnswer = async (
+    user_answer,
+    question_id,
+    onClick,
+    lang,
+    option_one,
+    option_two
+  ) => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -98,6 +113,8 @@ function Quiz({ setIsMusicAllowed, platform }) {
 
     const signal = abortControllerRef.current.signal;
     setIsQuizQuestionLoading(true);
+    setCorrectOption("");
+
     const responce = await axios.post(
       `/verify_answer`,
       {
@@ -106,6 +123,8 @@ function Quiz({ setIsMusicAllowed, platform }) {
         onClick,
         lang,
         platform,
+        option_one,
+        option_two,
       },
       { signal }
     );
@@ -126,6 +145,8 @@ function Quiz({ setIsMusicAllowed, platform }) {
       // }, 1000);
     }
 
+    setReplyAudio(responce?.data?.response_text);
+    setCorrectOption(responce?.data?.correct_option);
     return responce?.data;
   };
 
@@ -138,10 +159,20 @@ function Quiz({ setIsMusicAllowed, platform }) {
       audioRef.current.src = null;
     }
 
-    const ans = await verifyAnswer(event, id, true, lang);
+    const ans = await verifyAnswer(
+      event,
+      id,
+      true,
+      lang,
+      allQuestions?.[currentIndex]?.options[0],
+      allQuestions?.[currentIndex]?.options[1]
+    );
+
     setIsGivenAnswerCorrect(ans.is_correct);
+    console.log(isGivenAnswerCorrect);
 
     setCorrectResponceAnswer(ans.correct_answer);
+    console.log(correctResponceAnswer);
 
     setUserResponceArray({
       ...userResponceArray,
@@ -180,10 +211,18 @@ function Quiz({ setIsMusicAllowed, platform }) {
     if (value) {
       // micOffSound();
 
-      const ans = await verifyAnswer(speechText, question_id, false, lang);
+      const ans = await verifyAnswer(
+        speechText,
+        question_id,
+        false,
+        lang,
+        allQuestions?.[currentIndex]?.options[0],
+        allQuestions?.[currentIndex]?.options[1]
+      );
+
       let event = "";
-      if (ans.is_correct == "true") {
-        if (ans.correct_answer == allQuestions?.[currentIndex]?.options[0]) {
+      if (ans.is_correct === true) {
+        if (ans.correct_answer === allQuestions?.[currentIndex]?.options[0]) {
           setSelectedOption(allQuestions?.[currentIndex]?.options[0]);
           event = allQuestions?.[currentIndex]?.options[0];
         } else {
@@ -191,12 +230,12 @@ function Quiz({ setIsMusicAllowed, platform }) {
           event = allQuestions?.[currentIndex]?.options[1];
         }
       } else {
-        if (ans.correct_answer == allQuestions?.[currentIndex]?.options[0]) {
+        if (ans.correct_answer === allQuestions?.[currentIndex]?.options[0]) {
           setSelectedOption(allQuestions?.[currentIndex]?.options[1]);
           event = allQuestions?.[currentIndex]?.options[1];
         } else {
           setSelectedOption(allQuestions?.[currentIndex]?.options[0]);
-          event = allQuestions?.[currentIndex]?.options[1];
+          event = allQuestions?.[currentIndex]?.options[0];
         }
       }
 
@@ -230,6 +269,7 @@ function Quiz({ setIsMusicAllowed, platform }) {
       startSpeechRecognition();
     }
   };
+
   const setDataBeforeLogin = async (userResponceArray) => {
     await axios.post(`/before_login_quiz_data`, {
       uuid: userResponceArray.uuid,
@@ -328,14 +368,11 @@ function Quiz({ setIsMusicAllowed, platform }) {
                   pointerEvents: selectedOption != "" ? "none" : "auto",
                 }}
                 className={`  ${
-                  correctResponceAnswer
-                    ? isGivenAnswerCorrect
-                      ? correctResponceAnswer.trim() ==
-                        allQuestions?.[currentIndex]?.options[0].trim()
-                        ? "border-[#00AA07]"
-                        : "border-[#FA3939]"
-                      : "border-[#FA3939]"
-                    : "border-[#ADD1FF] "
+                  correctOption === "option_one"
+                    ? "border-[#00AA07]"
+                    : correctOption === "option_two"
+                    ? "border-[#FA3939]"
+                    : "border-[#ADD1FF]"
                 }  py-[11px] px-[10.21px]  flex justify-between rounded-[7.66px] border-[1.28px]`}
                 // className="flex justify-between items-center rounded-[7.7px] px-[10.5px] border border-[#ADD1FF]"
               >
@@ -368,16 +405,12 @@ function Quiz({ setIsMusicAllowed, platform }) {
                   pointerEvents: selectedOption != "" ? "none" : "auto",
                 }}
                 className={` ${
-                  correctResponceAnswer
-                    ? isGivenAnswerCorrect
-                      ? correctResponceAnswer.trim() ==
-                        allQuestions?.[currentIndex]?.options[1].trim()
-                        ? "border-[#00AA07] "
-                        : "border-[#FA3939]"
-                      : "border-[#FA3939]"
+                  correctOption === "option_two"
+                    ? "border-[#00AA07]"
+                    : correctOption === "option_one"
+                    ? "border-[#FA3939]"
                     : "border-[#ADD1FF]"
                 } py-[11px] px-[10.21px]  flex justify-between rounded-[7.66px] border-[1.28px] `}
-                // className="flex justify-between items-center rounded-[7.7px] px-[10.5px] border border-[#ADD1FF]"
               >
                 <label
                   className="font-Inter text-[12.76px] font-medium leading-[15.44px] text-left "
@@ -497,7 +530,9 @@ function Quiz({ setIsMusicAllowed, platform }) {
 
           <SoundOnAnswer
             questionStatus={questionStatus}
+            replyAudio={replyAudio}
             setQuestionStatus={setQuestionStatus}
+            setReplyAudio={setReplyAudio}
           />
 
           {permissionToStartSound && (

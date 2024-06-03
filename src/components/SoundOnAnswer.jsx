@@ -1,29 +1,49 @@
-import { useEffect, useRef } from "react";
+// import { useEffect, useRef } from "react";
+import { useState } from "react";
+import TextToSpeech from "./TextToSpeech";
 
-function SoundOnAnswer({ questionStatus, setQuestionStatus }) {
-  const soundRef = useRef();
+function SoundOnAnswer({
+  questionStatus,
+  setQuestionStatus,
+  replyAudio,
+  setReplyAudio,
+}) {
 
-  useEffect(() => {
-    if (questionStatus !== "") {
-      soundRef.current.play();
-    } 
-    else {
-      soundRef.current.pause();
-    }
-  }, [questionStatus]);
+
+  // const soundRef = useRef();
+
+  // useEffect(() => {
+  //   if (questionStatus !== "" && replyAudio) {
+  //     soundRef.current.play();
+  //   } else {
+  //     soundRef.current.pause();
+  //   }
+  // }, [questionStatus]);
 
   return (
-    <audio
-      ref={soundRef}
-      onEnded={() => setQuestionStatus("")}
-      src={
-        questionStatus !== ""
-          ? questionStatus
-            ? "/sounds/right_ans_tone.mp3"
-            : "/sounds/wrong_ans_sound.mp3"
-          : ""
-      }
-    ></audio>
+    // <audio
+    //   ref={soundRef}
+    //   onEnded={() => setQuestionStatus("")}
+    //   // src={
+    //   //   questionStatus !== ""
+    //   // ? questionStatus
+    //   //   ? "/sounds/right_ans_tone.mp3"
+    //   //       : "/sounds/wrong_ans_sound.mp3"
+    //   //     : ""
+    //   // }
+    //   type="audio/wav"
+    //   src={`data:audio/wav;base64,${replyAudio}`}
+    // ></audio>
+
+    <>
+      {questionStatus !== "" && (
+        <TextToSpeech
+          setQuestionStatus={setQuestionStatus}
+          replyAudio={replyAudio}
+          setReplyAudio={setReplyAudio}
+        />
+      )}
+    </>
   );
 }
 

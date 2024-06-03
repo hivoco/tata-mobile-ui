@@ -29,6 +29,7 @@ function LeaderBoard() {
           </table>
         </div>
       </div>
+      
     </Layout>
   );
 }

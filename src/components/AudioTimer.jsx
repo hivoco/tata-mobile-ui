@@ -1,5 +1,4 @@
-// Timer.js
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const AudioTimer = ({ onTimeout, audioTime, setAudioTime, isAnswered }) => {
   const [isInitialRender, setIsInitialRender] = useState(true);

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const debounce = (func, delay) => {
   let timerId;
   return (...args) => {
@@ -106,6 +108,35 @@ function analyzeAudio(audioBuffer) {
   }
 }
 
+
+
+const openAI_STT = async (audio) => {
+  try {
+    const audioFile = new File([audio], "audio.wav");
+    const formData = new FormData();
+    formData.append("file", audioFile);
+    formData.append("model", "whisper-1"); // Use the appropriate model name for OpenAI's Speech-to-Text
+    formData.append("language", "en");
+
+    const response = await axios.post(
+      "https://api.openai.com/v1/audio/transcriptions",
+      formData,
+      {
+        headers: {
+          Authorization: "Bearer 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",
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    //  setTranscript(response.data.text);
+    // console.log("dd", response.data.text);// text converted from speech
+    return response.data.text;
+  } catch (err) {
+    console.error("Error sending audio to OpenAI:", err);
+  }
+};
+
 export {
   debounce,
   micOnSound,
@@ -114,4 +145,5 @@ export {
   blobToBase64,
   getPlatform,
   processAudioBlob,
+  openAI_STT
 };

@@ -5,7 +5,7 @@ function TableBody({ data }) {
     return (
       <tr
         key={index}
-        className={`font-Inter flex justify-between items-center  py-3 pl-2 pr-[13.57px] rounded-[4.22px] gap-12 shadow-[0px_1.7px_10.1px_0px_#00000026]
+        className={` ${isLastRow?"-mt-3":"gap-12"} font-Inter flex justify-between items-center  py-3 pl-2 pr-[13.57px] rounded-[4.22px]  shadow-[0px_1.7px_10.1px_0px_#00000026]
             ${
               index <= 2
                 ? " bg-gradient-to-r from-[#FFEAE1] to-[#F6D837]"
@@ -25,14 +25,14 @@ function TableBody({ data }) {
             />
           ) : (
             <span
-              className={`w-6 font-Inter py-[6.89px] px-[1.53px] rounded-full  border-[0.5px] border-solid border-[#3983FF] text-[10px] font-bold leading-[10px] text-center  ${
+              className={`aspect-square font-Inter py-[6.89px] px-[1.53px] rounded-full  border-[0.5px] border-solid border-[#3983FF] text-[10px] font-bold leading-[10px]  flex  justify-center  ${
                 isLastRow
-                  ? " text-[#252042] bg-white  "
-                  : "text-white border  bg-[#095FEEE5] "
+                  ? " text-[#252042] bg-white min-w-6 items-center"
+                  : "text-white border  bg-[#095FEEE5]  w-6"
               }`}
             >
               {rank}
-              <sup className="text-[8px] leading-[10px] text-center">th</sup>
+              <sup className=" text-[8px] leading-[10px] ">th</sup>
             </span>
           )}
 
@@ -57,7 +57,7 @@ function TableBody({ data }) {
             isLastRow ? "text-white" : ""
           }`}
         >
-          <span className="  ">{score}</span>
+          <span className=" ">{score}</span>
 
           <div className="">{Math.floor(Number(time) / 60) + 1}</div>
         </td>

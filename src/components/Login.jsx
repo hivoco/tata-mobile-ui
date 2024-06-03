@@ -25,7 +25,7 @@ function Login() {
   };
   return (
     <Layout bg={"/images/ss3.png"}>
-      <div className=" flex flex-col px-6  items-center  bg-no-repeat     overflow-x-hidden">
+      <div className=" flex flex-col px-6  gap-[1.82rem] items-center  bg-no-repeat     overflow-x-hidden">
         <div className="w-full flex flex-col items-center  ">
           <div className="h-40 w-auto">
             <img src="/svgs/Its-Game-time.svg" alt="its game time" />
@@ -105,6 +105,9 @@ function Login() {
             </div>
           </div>
         </div>
+
+        <img src="svgs/poweredBy.svg" alt="powered by" />
+
       </div>
     </Layout>
   );

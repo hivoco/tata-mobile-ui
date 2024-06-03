@@ -4,7 +4,6 @@ import axios from "./instance";
 
 export const getUniqueID = async () => {
   const responce = await axios(`/guest_user?name=&phone=`);
-  console.log("first", responce.data.unique_id);
   sessionStorage.setItem("unique_id", responce.data.unique_id);
   return responce.data.unique_id;
 };

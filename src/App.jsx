@@ -32,6 +32,8 @@ function App() {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
+
+  
   return (
     <BrowserRouter>
       {isMusicAllowed && (
