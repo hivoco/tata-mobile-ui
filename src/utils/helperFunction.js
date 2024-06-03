@@ -123,7 +123,7 @@ const openAI_STT = async (audio) => {
       formData,
       {
         headers: {
-          Authorization: "Bearer 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",
+          // Authorization: "Bearer apiKey",
           "Content-Type": "multipart/form-data",
         },
       }

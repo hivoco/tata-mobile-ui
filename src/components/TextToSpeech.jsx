@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const TextToSpeech = ({ setQuestionStatus, replyAudio, setReplyAudio }) => {
   const [audioUrl, setAudioUrl] = useState("");
-  const API_KEY = "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";
+  const API_KEY = '  '
 
   const handleTextToSpeech = async () => {
     console.log("handleTextToSpeech called");
